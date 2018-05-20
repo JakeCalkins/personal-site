@@ -1,3 +1,41 @@
-p {
-    font-family: 'Courier New', Courier, monospace;
+.container {
+    font-family: 'Source Sans Pro', sans-serif;
+    margin: auto;
+    width: 50%;
+}
+
+.main-body {
+    position: relative;
+}
+
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+}
+
+.button {
+    background-color: none;
+    border: none;
+}
+
+.construction {
+    font-size: 1em;
+    font-style: italic;
+}
+
+
+h1 {
+    font-size: 5em;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+h3 {
+    font-size: 1em;
+    font-style: italic;
+    margin-top: 0;
+    padding-top: 0;
 }
