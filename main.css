@@ -1,72 +1,100 @@
-/* JakeCalkins2018*/
+/* Jake Calkins 2018*/
 
-.container {
+@keyframes slideIn{
+    0% {
+        transform: translateX(-1000px);
+        opacity: 0.7;
+    }
+    50% {
+        transform: translateX(0px);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn{
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    70% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+body {
+    background: rgb(2,204,186);
+    background: linear-gradient(45deg, rgba(2,204,186,1) 0%, rgba(67,148,217,1) 51%, rgba(146,79,255,1) 100%);
     font-family: 'Source Sans Pro', sans-serif;
-    margin: auto;
-    width: 75%;
-}
-
-.content-boxes {
-    display: grid;
-    grid-template-columns: 200px 200px 200px 200px;
-    grid-template-rows: 200px 200px;
-    grid-gap: 30px;
-    align-content: space-evenly;
-    margin-left: auto;
-    margin-right: auto;
-    
-}
-
-.box {
-    background: linear-gradient(-45deg,#02b3e4,#02ccba);
-    box-shadow: 8px 10px 20px 0 rgba(46,61,73,.15);
-    border-radius: 10px;
-    padding: 10px;
-    position: relative;
-    z-index: 1;
-}
-
-.box-content {
-    color: white;
-    font-size: 50px;
-    font-weight: 600;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-}
-
-.box::before {
-    background: linear-gradient(-45deg,#0062ff,#924fff);
-    box-shadow: 8px 10px 40px 0 rgba(0, 0, 0, 0.48);
-    position: absolute;
-    border-radius: 10px;
-    content: "";
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-    transition: opacity 0.5s linear;
-    opacity: 0;
-}
-
-.box:hover::before {
-    opacity: 1;
-    cursor: pointer;
-}
-
-.title-head {
 }
 
 h1 {
-    font-size: 5em;
+    animation: slideIn 2s 1 0.0s ease;
+    font-size: 10em;
+    line-height: 0.8em;
     margin-bottom: 0;
     padding-bottom: 0;
+    font-weight: 900;
 }
 
 h3 {
-    font-size: 1em;
-    font-style: italic;
+    animation: slideIn 2s 1 0.0s ease;
+    font-size: 3em;
+    font-weight: 300;
     margin-top: 0;
     padding-top: 0;
+}
+
+@media only screen and (max-width: 700px) {
+    h1 {
+        font-size: 6em;
+    }
+    
+    h3 {
+        font-size: 1.5em;
+    }
+}
+
+.container {
+    margin: auto;
+    width: 95%;
+    color: white;
+}
+
+.content-boxes {
+    animation: fadeIn 1s 1 0.0s ease;
+    display: grid;
+    grid-template-columns: 15em 15em 15em 15em;
+    grid-template-rows: 15em 15em;
+    grid-gap: 2em;
+    align-content: space-evenly;    
+}
+
+.box {
+    background: rgba(204, 247, 255, 0.17);
+    box-shadow: 8px 10px 20px 0 rgba(0, 0, 0, 0.15);
+    border-radius: 40px
+    padding: 1em;
+    position: relative;
+}
+
+.box-content {
+    font-size: 50px;
+    font-weight: 400;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    user-select: none;
+    cursor: pointer;
+}
+
+.box:hover {
+    transition: 0.7s ease;
+    background: rgba(146, 79, 255, 0.41);
+    box-shadow: 8px 10px 20px 0 rgba(0, 0, 0, 0.46);
+    cursor: pointer;
 }
