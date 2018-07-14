@@ -85,6 +85,7 @@ h3 {
     box-shadow: 8px 10px 20px 0 rgba(0, 0, 0, 0.15);
     padding: 1em;
     position: relative;
+    transition: all 0.5s ease-in-out;
 }
 
 .box-content {
@@ -98,8 +99,12 @@ h3 {
 }
 
 .box:hover {
-    transition: 0.5s linear;
     background: rgba(146, 79, 255, 0);
     box-shadow: 0px 0px 40px 0 rgba(0, 0, 0, 0.46);
     cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
