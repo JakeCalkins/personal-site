@@ -108,3 +108,12 @@ a {
     text-decoration: none;
     color: inherit;
 }
+
+.p-content {
+    animation: slideIn 2s 1 0.0s ease;
+    background: rgb(0, 0, 0);
+    background-blend-mode: multiply;
+    width: 55%;
+    font-size: 1.25em;
+    padding: 2em;
+}
