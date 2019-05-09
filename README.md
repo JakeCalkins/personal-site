@@ -1,3 +1,9 @@
 # jakecalkins.com
-This site is currently under construction and serves as a testbed for new web technologies, things I've learned, and a my digital presence online.
 
+```
+1 | postgres
+2 | express
+3 | react
+4 | sass
+5 | node
+```
