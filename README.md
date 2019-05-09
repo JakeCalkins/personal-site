@@ -1,7 +1,7 @@
 # jakecalkins.com
 
 ```
-1 | postgres
+1 | mongo
 2 | express
 3 | react
 4 | sass
