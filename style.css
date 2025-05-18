@@ -1,4 +1,7 @@
-body { font-family: monospace; }
+body { 
+    font-family: monospace;
+    font-size: 110%;
+}
 
 /**
  * CSS Grid Layout
@@ -24,7 +27,7 @@ body { font-family: monospace; }
 
 .footer {
     grid-area: foot;
-    font-size: 8px;
+    font-size: 80%;
 }
 
 /**
