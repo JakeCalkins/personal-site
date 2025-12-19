@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Jake</title>
     <link rel="stylesheet" type="text/css" href="style.css" media="screen"/>
-    
-    <!-- EB Garamond, in lieu of a better alternate -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
-
 </head>
 <body>
     <div class="grid-container">
-        <div style="font-family: 'EB Garamond'" class="title">
+        <div class="title">
             <h1>Jake Calkins</h1>
             <h2><i>Full Stack Software Engineer</i></h2>
         </div>
         <div class="quick-links">
-            <a href="https://www.github.com/jakecalkins"><button id="github-icon">github</button></a>
-            <a href="https://www.linkedin.com/in/jakecalkins/"><button id="linkedin-icon">linkedin</button></a>
-            <a disabled href="mailto:contact@jakecalkins.com"><button id="email-icon">email</button></a>
+            <a class="social" href="https://www.github.com/jakecalkins" aria-label="GitHub" title="GitHub">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path fill="currentColor" d="M12 .5C5.73.5.75 5.48.75 11.75c0 4.96 3.22 9.16 7.69 10.65.56.1.77-.24.77-.54 0-.27-.01-1-.02-1.95-3.13.68-3.79-1.5-3.79-1.5-.51-1.3-1.24-1.65-1.24-1.65-1.02-.7.08-.69.08-.69 1.12.08 1.71 1.15 1.71 1.15 1 .72 2.62.51 3.26.39.1-.3.39-.51.71-.63-2.5-.28-5.12-1.25-5.12-5.56 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.4.11-2.92 0 0 .95-.3 3.12 1.15a10.8 10.8 0 0 1 2.84-.38c.96.01 1.92.13 2.84.38 2.17-1.45 3.12-1.15 3.12-1.15.61 1.52.23 2.64.11 2.92.72.79 1.16 1.79 1.16 3.02 0 4.32-2.62 5.28-5.12 5.56.4.34.76 1 .76 2.01 0 1.45-.01 2.62-.01 2.98 0 .3.2.65.78.54C19.04 21 22.25 16.7 22.25 11.75 22.25 5.48 17.27.5 12 .5z"/>
+                </svg>
+            </a>
+            <a class="social" href="https://www.linkedin.com/in/jakecalkins/" aria-label="LinkedIn" title="LinkedIn">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path fill="currentColor" d="M4.98 3.5C4.98 4.88 3.9 6 2.5 6S0 4.88 0 3.5 1.08 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8h4v14h-4V8zm7 0h3.8v2h.05c.53-1 1.83-2 3.77-2 4.03 0 4.78 2.66 4.78 6.12V22h-4V15.5c0-1.56-.03-3.57-2.17-3.57-2.17 0-2.5 1.69-2.5 3.44V22h-4V8z"/>
+                </svg>
+            </a>
+            <a class="social" href="mailto:contact@jakecalkins.com" aria-label="Email" title="Email">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path fill="currentColor" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+            </a>
         </div>
-        <div style="font-family: 'EB Garamond'" class="content">
+        <div class="content">
             <h3>Who am I?</h3>
             <p><i>Please check out my profile on <a href="https://www.linkedin.com/in/jakecalkins/">LinkedIn</a> for the most current updates.</i></p>
             <p>
@@ -56,4 +64,16 @@
             <p><i>Web page typeset in EB Garamond</i></p>
         </div>
     </div>
-</body>
+        </div>
+
+        <script>
+        (function(){
+            try {
+                var themes = ['t1','t2','t3','t4','t5'];
+                var pick = themes[Math.floor(Math.random()*themes.length)];
+                document.body.setAttribute('data-theme', pick);
+            } catch (e) { /* fail silently if script blocked */ }
+        })();
+        </script>
+
+    </body>
