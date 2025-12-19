@@ -2,35 +2,53 @@
 <head>
     <title>Jake</title>
     <link rel="stylesheet" type="text/css" href="style.css" media="screen"/>
+    
+    <!-- EB Garamond, in lieu of a better alternate -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <div class="grid-container">
-        <div class="title">
-            <h1>jake calkins - software engineer</h1>
+        <div style="font-family: 'EB Garamond'" class="title">
+            <h1>Jake Calkins</h1>
+            <h2><i>Full Stack Software Engineer</i></h2>
         </div>
         <div class="quick-links">
             <a href="https://www.github.com/jakecalkins"><button id="github-icon">github</button></a>
             <a href="https://www.linkedin.com/in/jakecalkins/"><button id="linkedin-icon">linkedin</button></a>
-            <a href="mailto:contact@jakecalkins.com"><button id="email-icon">email</button></a>
+            <a disabled href="mailto:contact@jakecalkins.com"><button id="email-icon">email</button></a>
         </div>
-        <div class="content">
-            <h3>who am i?</h3>
-            <p> a passionate, motivated and creative individual with interests in full-stack software development and user experience. for current updates, connect on linkedin.
+        <div style="font-family: 'EB Garamond'" class="content">
+            <h3>Who am I?</h3>
+            <p><i>Please check out my profile on             <a href="https://www.linkedin.com/in/jakecalkins/">LinkedIn</a> for the most current updates.</i></p>
+            <p>
+                Full Stack Software Engineer (5+ yrs) who builds new cloud-based services and modernizes legacy systems. Ships polished front-end experiences used by thousands of users in a high-performance claims environment. I combine a UX-first approach with scalable, testable backend systems. I use modern CI/CD and code quality standards to improve delivery speed, performance, and uptime.
+
+Core strengths:
+ - Cloud & microservices: Design and implement AWS microservices and serverless architectures (Lambda, Step Functions, Fargate) supporting document-processing and event-driven workloads (SQS, SNS, S3, DynamoDB).
+ - Front-end & UX: Build component-driven UIs with TypeScript, Vue, and React; focus on accessibility, predictable state management, and testable components.
+ - Developer experience & delivery: Modernize CI/CD (migrated 12+ pipelines from Bamboo Specs to GitHub Actions) and enforce code quality and coverage gates.
+
+At Liberty Mutual:
+ - Led migration of 12+ legacy CI/CD pipelines from Bamboo to GitHub Actions; defined requirements, onboarded contractors, and owned final production QA.
+ - Rebuilt a major AWS Fargate/TypeScript integration by merging two legacy codebases into a single repository, improving deployability and reducing operational complexity.
+ - Refactored a legal/medical document service (Vue + serverless backend), improving error handling, observability (Splunk dashboards), and clarity of user-facing warnings.
+
+I’m actively interviewing for Full-Stack or Front-End roles (Massachusetts or remote). If you’re hiring for a team building modern front-end experiences or cloud-based systems, feel free to message me directly on LinkedIn for an introduction.
             </p>
-            <p> a <a href="https://www.cics.umass.edu">CICS alumnus</a> from the university of massachusetts.
+            <p><a href="https://www.cics.umass.edu">CICS alumnus</a> from the University of Massachusetts Amherst.
             </p>
-            <p> a big fan of music, both listening and creating.
-            </p>
-            <br/>
-            <h3>interested in contacting me?</h3>
-            <p> connect on linkedin, or shoot me an email. currently, this website is a landing page and does not host my resume or portfolio.</p>
-            <br/>
-            <h3>why such a barebones site?</h3>
-            <p> this is purely a personal landing page. it serves a singular purpose: load fast and direct you to where you need to go. the minimal stack and design reflect this purpose.</p>
+            <h3>Interested in contacting me?</h3>
+            <p> Please connect with me on LinkedIn. This website is a landing page and does not host my resume or portfolio.</p>
         </div>
+        <br/>
+        <hr/>
         <div class="empty"> </div>
         <div class="footer">
-            <p>(c) jacob calkins <script>document.write(new Date().getFullYear())</script></p>
+            <p>(c) Jacob Calkins <script>document.write(new Date().getFullYear())</script></p>
+            <p><i>Web page typeset in EB Garamond</i></p>
         </div>
     </div>
 </body>
