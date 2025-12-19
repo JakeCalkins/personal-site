@@ -258,21 +258,22 @@ a, .content a {
 }
 
 .profile-banner .banner-icon {
-    width: 16px;
-    height: 16px;
+    width: 60%;
+    height: 60%;
+    max-width: 20px;
+    max-height: 20px;
     display: block;
 }
 
 .banner-icon-wrap {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    display: inline-grid;
+    place-items: center;
     width: 36px;
-    height: 36px;
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     border: 1.5px solid var(--border-color);
     box-sizing: border-box;
-    padding: 6px;
+    padding: 4px;
     background: transparent;
     color: var(--accent-color);
 }
