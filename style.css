@@ -120,14 +120,6 @@ body[data-theme="t5"] {
     color: var(--muted-color);
 }
 
-/**
- * Buttons for the Quick Links
- */
-
-#github-icon {}
-#linkedin-icon {}
-#email-icon {}
-
 /* Social icon links (circular, monochrome, minimalist) */
 .quick-links {
     grid-area: links;
@@ -292,43 +284,7 @@ a, .content a {
     font-style: normal;
 }
 
-/* Inline alumnus link (icon + text) */
-.inline-icon-wrap {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    border: 1.5px solid var(--border-color);
-    box-sizing: border-box;
-    padding: 4px;
-    background: transparent;
-    color: var(--accent-color);
-    margin-right: 0.6rem;
-}
-
-.inline-alum {
-    display: inline-block;
-    vertical-align: middle;
-    text-decoration: none;
-    color: var(--accent-color);
-}
-
-.inline-alum .inline-icon-wrap {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-.inline-alum .inline-icon {
-    width: 14px;
-    height: 14px;
-    display: block;
-}
-
-.inline-alum:hover {
-    background: color-mix(in srgb, var(--surface-color) 75%, var(--accent-color) 25%);
-    transform: translateY(-2px);
-}
+/* Inline alumnus link removed — reverted to simple link in HTML */
 
 /* Ensure equal spacing below title and below banner on small screens */
 @media (max-width: 640px) {
