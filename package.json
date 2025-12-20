@@ -6,6 +6,7 @@
     "build:md": "node ./scripts/generate-md.js"
   },
   "dependencies": {
-    "marked": "^5.1.1"
+    "marked": "^5.1.1",
+    "js-yaml": "^4.1.0"
   }
 }

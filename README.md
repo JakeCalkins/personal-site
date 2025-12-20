@@ -2,6 +2,68 @@
 
 This repository contains a small, single-page personal landing site for Jake
 Calkins. It is intentionally minimal and fast — a typographic landing page with
+links to social profiles and a short bio. The site is built and deployed using
+GitHub Pages Actions.
+
+## Contents
+
+- `index.html` — main page shell and placeholder for generated content
+- `style.css` — site styling and theme variables (dark mode + responsive rules)
+- `content/` — markdown files (new) that are converted into HTML
+- `scripts/generate-md.js` — build script that converts markdown into HTML
+- `package.json` — build dependencies and scripts (`npm run build:md`)
+- `.github/workflows/static.yml` — Pages workflow that runs the build and deploys `dist/`
+
+## Content authoring
+
+- Add content as Markdown files into the `content/` directory (create it at the repo root if it doesn't exist).
+- Each markdown file may include an optional YAML front-matter block at the top to set metadata for that section. Supported front-matter fields:
+	- `title`: string — used as the section title (defaults to the filename)
+	- `order`: number — lower values appear earlier in the page (defaults to filename order)
+
+Example:
+```md
+---
+title: About
+order: 10
+---
+
+Here is the content for the About section.
+```
+
+## Build & CI
+
+- The build performs the following during CI (and can be run locally):
+	1. Read `content/*.md` and parse optional YAML front-matter.
+	2. Convert Markdown to HTML using `marked`.
+	3. Inject the generated HTML into `index.html` at the placeholder `<!-- MD_CONTENT -->`.
+	4. Write the built site to `dist/index.html` and copy static assets (`style.css`, `favicon.svg`, `CNAME`) into `dist/`.
+	5. The Pages workflow uploads the `dist/` artifact and deploys the site.
+
+## Local testing
+
+```bash
+# install dependencies
+npm ci
+
+# build markdown into dist/
+npm run build:md
+
+# preview locally
+python3 -m http.server 8000 --directory dist
+# then open http://localhost:8000
+```
+
+## Notes and next steps
+
+- The generated HTML is injected into the `.content` area of the page so existing styling (dark mode, responsive rules, FAB, etc.) is preserved.
+- If you'd like per-markdown-page routes (separate HTML pages per file), RSS, or pagination, I can extend the build to generate multiple files and an index.
+
+License: personal
+# personal-site
+
+This repository contains a small, single-page personal landing site for Jake
+Calkins. It is intentionally minimal and fast — a typographic landing page with
 links to social profiles and a short bio.
 
 Contents
