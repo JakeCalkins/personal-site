@@ -5,9 +5,15 @@
 dist/
 node_modules/
 src/assets/css/
+src/assets/js/*.js
+src/assets/js/*.ts
+coverage/
+.nyc_output/
+.ts-out-tests/
+.ts-out/
 
 # WIP
 TODO.md
 
 # Debug
-*.tar
+*.tar.DS_Store

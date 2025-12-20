@@ -1,15 +1,12 @@
-#!/usr/bin/env node
-const fs = require('fs').promises;
-const path = require('path');
-// `unified` is ESM-only in some installs; import it dynamically inside
-// the async `main()` to avoid top-level `await` syntax errors when this
-// script is executed under CommonJS (node <type module>).
-// We'll dynamically import remark/rehype plugins inside `main()` below.
+#!/usr/bin/env ts-node
+import { promises as fs } from 'fs';
+import path from 'path';
 
-async function main() {
-  const { unified } = await import('unified');
-  // Dynamic-import remark/rehype plugins (some are ESM-only). Use
-  // `.default` when present, otherwise fall back to the module itself.
+async function main(): Promise<void> {
+  // Dynamic import remark/rehype + unified to support ESM-only packages.
+  const unifiedMod: any = await import('unified');
+  const unified = unifiedMod.unified || unifiedMod.default || unifiedMod;
+
   const remarkParseMod = await import('remark-parse');
   const remarkParse = remarkParseMod.default || remarkParseMod;
   const remarkGfmMod = await import('remark-gfm');
@@ -20,16 +17,16 @@ async function main() {
   const rehypeStringify = rehypeStringifyMod.default || rehypeStringifyMod;
   const rehypeSlugMod = await import('rehype-slug');
   const rehypeSlug = rehypeSlugMod.default || rehypeSlugMod;
-  const rehypeAutolinkMod = await import('rehype-autolink-headings');
-  const rehypeAutolink = rehypeAutolinkMod.default || rehypeAutolinkMod;
   const remarkFrontmatterMod = await import('remark-frontmatter');
   const remarkFrontmatter = remarkFrontmatterMod.default || remarkFrontmatterMod;
   const matterMod = await import('gray-matter');
   const matter = matterMod.default || matterMod;
+
   const cwd = process.cwd();
   const contentDir = path.join(cwd, 'content');
   const srcDir = path.join(cwd, 'src');
-  let files = [];
+
+  let files: string[] = [];
   try {
     files = await fs.readdir(contentDir);
   } catch (e) {
@@ -43,9 +40,7 @@ async function main() {
     return;
   }
 
-  // Read files, extract YAML front-matter using `gray-matter`, and collect metadata
-  // We still include `remark-frontmatter` in the pipeline for completeness.
-  const items = [];
+  const items: Array<any> = [];
   for (const file of mdFiles) {
     const src = path.join(contentDir, file);
     const raw = await fs.readFile(src, 'utf8');
@@ -53,14 +48,12 @@ async function main() {
     const meta = parsed.data || {};
     const content = parsed.content || '';
 
-    // fallback title and order
     const title = meta.title || file.replace(/\.md$/i, '').replace(/[-_]/g, ' ');
     const order = (typeof meta.order === 'number') ? meta.order : (meta.order ? Number(meta.order) : null);
 
     items.push({ file, title, order, meta, md: content });
   }
 
-  // Sort by order (if provided) then filename
   items.sort((a, b) => {
     if (a.order != null && b.order != null) return a.order - b.order;
     if (a.order != null) return -1;
@@ -68,9 +61,7 @@ async function main() {
     return a.file.localeCompare(b.file);
   });
 
-  // Use remark + rehype to convert markdown -> HTML. This is modern, extensible,
-  // and avoids the deprecation warnings from `marked` defaults.
-  const partsArr = [];
+  const partsArr: string[] = [];
   for (const item of items) {
     const fileHtml = String(
       await unified()
@@ -79,25 +70,21 @@ async function main() {
         .use(remarkFrontmatter)
         .use(remarkRehype)
         .use(rehypeSlug)
-        .use(rehypeAutolink, { behavior: 'wrap' })
         .use(rehypeStringify)
         .process(item.md)
     );
 
     const slug = item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-    // If the rendered HTML already starts with an H1/H2, don't prepend a duplicate header.
     const trimmed = fileHtml.trim();
     const hasLeadingHeading = /^<h[12][\s>]/i.test(trimmed);
     const headerHtml = hasLeadingHeading ? '' : `<header class="md-section-header"><h2>${item.title}</h2></header>\n`;
     partsArr.push(`<!-- from: ${item.file} -->\n<section class="md-section" id="${slug}" data-source="${item.file}">\n${headerHtml}${fileHtml}\n</section>`);
   }
 
-  const parts = partsArr;
-
-  const injected = parts.join('\n\n');
+  const injected = partsArr.join('\n\n');
 
   const indexPath = path.join(srcDir, 'index.html');
-  let index;
+  let index: string;
   try {
     index = await fs.readFile(indexPath, 'utf8');
   } catch (e) {
@@ -112,43 +99,79 @@ async function main() {
 
   index = index.replace('<!-- MD_CONTENT -->', injected);
 
-  // Ensure dist directory exists
   const distDir = path.join(cwd, 'dist');
   await fs.mkdir(distDir, { recursive: true });
 
-  // Write built index.html to dist (do not overwrite source index.html)
   const outIndex = path.join(distDir, 'index.html');
+  
+  // Minify HTML if in production mode
+  if (process.env.NODE_ENV === 'production') {
+    const { minify } = await import('html-minifier-terser');
+    index = await minify(index, {
+      collapseWhitespace: true,
+      removeComments: true,
+      removeRedundantAttributes: true,
+      removeScriptTypeAttributes: true,
+      removeStyleLinkTypeAttributes: true,
+      useShortDoctype: true,
+      minifyCSS: false, // CSS already minified
+      minifyJS: false,  // JS already minified
+    });
+  }
+  
   await fs.writeFile(outIndex, index, 'utf8');
 
-  // Copy static assets that the site depends on into dist
-  // Keep the same relative paths as in src/index.html, so copy entire assets/ tree if present.
   const assetsSrc = path.join(srcDir, 'assets');
-  async function copyRecursive(srcRoot, destRoot) {
+  async function copyRecursive(srcRoot: string, destRoot: string) {
     try {
       const entries = await fs.readdir(srcRoot, { withFileTypes: true });
       await fs.mkdir(destRoot, { recursive: true });
       for (const ent of entries) {
         const s = path.join(srcRoot, ent.name);
         const d = path.join(destRoot, ent.name);
+        if (ent.name === 'scss' && ent.isDirectory()) continue;
         if (ent.isDirectory()) {
           await copyRecursive(s, d);
         } else if (ent.isFile()) {
+          if (s.endsWith('.scss') || s.endsWith('.ts')) continue;
           await fs.copyFile(s, d);
         }
       }
     } catch (e) {
-      // swallow missing assets folder
+      // ignore missing assets
     }
   }
 
   await copyRecursive(assetsSrc, path.join(distDir, 'assets'));
 
-  // Also copy CNAME if present at repo root
   try {
     await fs.copyFile(path.join(cwd, 'CNAME'), path.join(distDir, 'CNAME'));
   } catch (e) { /* ignore */ }
 
-  console.log('Built site written to ./dist (index.html + assets)');
+  // Generate robots.txt
+  const robotsTxt = `User-agent: *
+Allow: /
+
+Sitemap: https://www.jakecalkins.com/sitemap.xml
+`;
+  await fs.writeFile(path.join(distDir, 'robots.txt'), robotsTxt, 'utf8');
+
+  // Generate sitemap.xml
+  const sitemapUrl = 'https://www.jakecalkins.com/';
+  const lastmod = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+  const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>${sitemapUrl}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
+`;
+  await fs.writeFile(path.join(distDir, 'sitemap.xml'), sitemapXml, 'utf8');
+
+  console.log('Built site written to ./dist (index.html + assets + robots.txt + sitemap.xml)');
 }
 
 main().catch(err => {
