@@ -160,31 +160,6 @@ body[data-theme="t5"] {
 }
 
 .title h2 {
-    /* Improve contrast for FAB and its menu in dark mode */
-    .fab{background-color:color-mix(in srgb,var(--accent-color) 80%, var(--surface-solid) 20%)!important;color:var(--surface-solid)!important}
-    .fab .bar{background:var(--surface-solid)!important}
-    .fab.open{background-color:color-mix(in srgb,var(--accent-color) 70%, var(--surface-solid) 30%)!important;color:var(--surface-solid)!important}
-    .fab-menu .item{background:color-mix(in srgb,var(--surface-solid) 12%, var(--surface-color) 88%);color:var(--accent-color);border-color:color-mix(in srgb,var(--surface-solid) 6%,var(--border-color) 94%)}
-    .fab-menu .item .label{color:var(--accent-color)}
-    .fab-menu .icon-wrap{background:transparent;border-color:color-mix(in srgb,var(--surface-solid) 8%,var(--border-color) 92%)}
-    .fab-menu.open .item:hover{background:color-mix(in srgb,var(--surface-solid) 18%,var(--accent-color) 82%);color:var(--surface-solid)}
-    .fab-backdrop{background:rgba(0,0,0,0.55)}
-
-    /* Stronger, lighter borders for interactive controls in dark mode */
-    .social,
-    .profile-banner,
-    .fab,
-    .fab-menu .item,
-    .fab-menu .icon-wrap {
-        /* stronger visible light border in dark mode */
-        border: 1.25px solid rgba(255,255,255,0.32) !important;
-        border-style: solid !important;
-    }
-
-    /* Optional thin highlight to make edges pop slightly on very dark backgrounds */
-    .social, .profile-banner, .fab, .fab-menu .item {
-        box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset, 0 6px 18px rgba(0,0,0,0.36);
-    }
     margin: 0;
     font-size: 1.05rem;
     font-weight: 300; /* lighter subheading */
@@ -244,7 +219,7 @@ a, .content a {
         --surface-color: rgba(2,6,23,0.6);
         --surface-solid: #020617;
         --accent-color: #e6f3f2;
-        --border-color: rgba(255,255,255,0.04);
+        --border-color: rgba(255,255,255,0.18);
     }
     body[data-theme="t2"] {
         --bg: linear-gradient(135deg,#1a1210 0%, #0f0a08 100%);
@@ -253,7 +228,7 @@ a, .content a {
         --surface-color: rgba(18,12,10,0.6);
         --surface-solid: #120c0a;
         --accent-color: #f6efe6;
-        --border-color: rgba(246,239,230,0.04);
+        --border-color: rgba(255,255,255,0.18);
     }
     body[data-theme="t3"] {
         --bg: linear-gradient(135deg,#021126 0%, #041529 100%);
@@ -262,7 +237,7 @@ a, .content a {
         --surface-color: rgba(2,6,18,0.6);
         --surface-solid: #020612;
         --accent-color: #cfe6ff;
-        --border-color: rgba(207,230,255,0.04);
+        --border-color: rgba(255,255,255,0.18);
     }
     body[data-theme="t4"] {
         --bg: linear-gradient(135deg,#120c10 0%, #0b0709 100%);
@@ -271,7 +246,7 @@ a, .content a {
         --surface-color: rgba(18,12,14,0.6);
         --surface-solid: #120c0e;
         --accent-color: #faeef6;
-        --border-color: rgba(250,238,246,0.04);
+        --border-color: rgba(255,255,255,0.18);
     }
     body[data-theme="t5"] {
         --bg: linear-gradient(135deg,#06221a 0%, #03120f 100%);
@@ -280,7 +255,23 @@ a, .content a {
         --surface-color: rgba(3,10,8,0.6);
         --surface-solid: #030a08;
         --accent-color: #bff6e8;
-        --border-color: rgba(191,246,232,0.04);
+        --border-color: rgba(255,255,255,0.18);
+    }
+
+    /* Dark-mode interactive control adjustments */
+    /* Thicker, more opaque light borders for controls (but not the FAB) */
+    .social,
+    .profile-banner,
+    .banner-icon-wrap,
+    .fab-menu .item,
+    .fab-menu .icon-wrap {
+        border: 2px solid rgba(255,255,255,0.40) !important;
+        box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset, 0 8px 22px rgba(0,0,0,0.40);
+    }
+
+    /* The floating action button should not have an inner border in dark mode; keep its outer outline if desired */
+    .fab {
+        border: none !important;
     }
 }
 
