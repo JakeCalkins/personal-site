@@ -7,9 +7,9 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "rootDir": "src/assets/js",
+    "rootDir": "src/assets/ts",
     "outDir": "src/assets/js",
     "allowJs": true
   },
-  "include": ["src/assets/js/**/*.ts"]
+  "include": ["src/assets/ts/**/*.ts"]
 }

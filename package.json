@@ -4,12 +4,15 @@
   "private": true,
   "scripts": {
     "build:md": "ts-node ./scripts/generate-md.ts",
-    "build:ts-client": "tsc --project tsconfig.client.json --outDir .ts-out && cp -a .ts-out/src/assets/js/. src/assets/js/ || true && rm -rf .ts-out",
+    "build:ts-client": "tsc --project tsconfig.client.json",
     "build:css": "sass src/assets/scss/style.scss src/assets/css/style.css --no-source-map --style=expanded",
     "start:local": "sh -lc \"(npm ci || npm i) && npm run build:css && npm run build:md && python3 -m http.server 8000 --directory dist\"",
     "check": "npm run build:css && npm run build:md",
-    "test:theme": "node ./scripts/test-theme-toggle.js",
-    "lint:js": "eslint \"src/**/*.js\" \"scripts/**/*.js\" --ext .js",
+    "test:theme": "ts-node ./scripts/test-theme-toggle.ts",
+    "collect-runtime-classes": "ts-node ./scripts/collect-runtime-classes.ts",
+    "coverage-css": "ts-node ./scripts/coverage-css.ts",
+    "screenshot-theme": "ts-node ./scripts/screenshot-theme.ts",
+    "lint:js": "eslint \"src/**/*.js\" \"scripts/**/*.ts\" --ext .js,.ts",
     "lint:css": "stylelint \"src/assets/scss/**/*.scss\" --custom-syntax postcss-scss --allow-empty-input",
     "lint": "npm run lint:js && npm run lint:css"
   },
