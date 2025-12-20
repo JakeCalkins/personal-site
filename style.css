@@ -176,8 +176,9 @@ body[data-theme="t5"] {
     .fab,
     .fab-menu .item,
     .fab-menu .icon-wrap {
-        /* use an explicit, slightly opaque white for visible light borders in dark mode */
-        border-color: rgba(255,255,255,0.16) !important;
+        /* stronger visible light border in dark mode */
+        border: 1.25px solid rgba(255,255,255,0.32) !important;
+        border-style: solid !important;
     }
 
     /* Optional thin highlight to make edges pop slightly on very dark backgrounds */
