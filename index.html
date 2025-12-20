@@ -31,7 +31,7 @@
                         <path fill="currentColor" d="M4.98 3.5C4.98 4.88 3.9 6 2.5 6S0 4.88 0 3.5 1.08 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8h4v14h-4V8zm7 0h3.8v2h.05c.53-1 1.83-2 3.77-2 4.03 0 4.78 2.66 4.78 6.12V22h-4V15.5c0-1.56-.03-3.57-2.17-3.57-2.17 0-2.5 1.69-2.5 3.44V22h-4V8z"/>
                     </svg>
                 </span>
-                <span class="banner-text">Interested? Click here to contact me on LinkedIn</span>
+                <span class="banner-text">Contact me on LinkedIn</span>
             </a>
             <h3>About</h3>
             <p>
@@ -58,7 +58,6 @@
             
         </div>
         <br>
-        <hr>
         <div class="empty"> </div>
         <div class="footer">
             <p>© Jacob Calkins <script>document.write(new Date().getFullYear())</script></p>
@@ -74,5 +73,76 @@
             } catch (e) { /* fail silently if script blocked */ }
         })();
         </script>
+
+    <!-- Mobile FAB navigation + backdrop -->
+    <div class="fab-backdrop" id="fab-backdrop" aria-hidden="true"></div>
+
+    <div class="mobile-nav" aria-hidden="true">
+        <button class="fab" id="fab-button" aria-label="Open menu" aria-expanded="false" aria-controls="fab-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </div>
+
+    <nav class="fab-menu" id="fab-menu" aria-hidden="true">
+        <a class="item" href="https://www.github.com/jakecalkins" aria-label="GitHub" title="GitHub">
+            <span class="icon-wrap" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M12 .5C5.73.5.75 5.48.75 11.75c0 4.96 3.22 9.16 7.69 10.65.56.1.77-.24.77-.54 0-.27-.01-1-.02-1.95-3.13.68-3.79-1.5-3.79-1.5-.51-1.3-1.24-1.65-1.24-1.65-1.02-.7.08-.69.08-.69 1.12.08 1.71 1.15 1.71 1.15 1 .72 2.62.51 3.26.39.1-.3.39-.51.71-.63-2.5-.28-5.12-1.25-5.12-5.56 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.4.11-2.92 0 0 .95-.3 3.12 1.15a10.8 10.8 0 0 1 2.84-.38c.96.01 1.92.13 2.84.38 2.17-1.45 3.12-1.15 3.12-1.15.61 1.52.23 2.64.11 2.92.72.79 1.16 1.79 1.16 3.02 0 4.32-2.62 5.28-5.12 5.56.4.34.76 1 .76 2.01 0 1.45-.01 2.62-.01 2.98 0 .3.2.65.78.54C19.04 21 22.25 16.7 22.25 11.75 22.25 5.48 17.27.5 12 .5z"/></svg>
+            </span>
+            <span class="label">GitHub</span>
+        </a>
+
+        <a class="item" href="mailto:contact@jakecalkins.com" aria-label="Email" title="Email">
+            <span class="icon-wrap" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </span>
+            <span class="label">Email</span>
+        </a>
+
+        <a class="item" href="https://www.linkedin.com/in/jakecalkins/" aria-label="LinkedIn" title="LinkedIn">
+            <span class="icon-wrap" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M4.98 3.5C4.98 4.88 3.9 6 2.5 6S0 4.88 0 3.5 1.08 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8h4v14h-4V8zm7 0h3.8v2h.05c.53-1 1.83-2 3.77-2 4.03 0 4.78 2.66 4.78 6.12V22h-4V15.5c0-1.56-.03-3.57-2.17-3.57-2.17 0-2.5 1.69-2.5 3.44V22h-4V8z"/></svg>
+            </span>
+            <span class="label">LinkedIn</span>
+        </a>
+    </nav>
+
+    <script>
+    (function(){
+        try {
+            var fabButton = document.getElementById('fab-button');
+            var fabMenu = document.getElementById('fab-menu');
+            var fabBackdrop = document.getElementById('fab-backdrop');
+
+            function setOpen(open) {
+                if (open) {
+                    fabButton.classList.add('open');
+                    fabMenu.classList.add('open');
+                    fabBackdrop.classList.add('visible');
+                    fabButton.setAttribute('aria-expanded','true');
+                    fabMenu.setAttribute('aria-hidden','false');
+                    fabBackdrop.setAttribute('aria-hidden','false');
+                } else {
+                    fabButton.classList.remove('open');
+                    fabMenu.classList.remove('open');
+                    fabBackdrop.classList.remove('visible');
+                    fabButton.setAttribute('aria-expanded','false');
+                    fabMenu.setAttribute('aria-hidden','true');
+                    fabBackdrop.setAttribute('aria-hidden','true');
+                }
+            }
+
+            function toggleFab() { setOpen(!fabButton.classList.contains('open')); }
+
+            if (fabButton && fabMenu && fabBackdrop) {
+                fabButton.addEventListener('click', function(e){ e.preventDefault(); toggleFab(); });
+                fabBackdrop.addEventListener('click', function(){ setOpen(false); });
+                document.addEventListener('keydown', function(e){ if (e.key === 'Escape') setOpen(false); });
+                Array.prototype.slice.call(fabMenu.querySelectorAll('a')).forEach(function(a){ a.addEventListener('click', function(){ setOpen(false); }); });
+            }
+        } catch (e) { /* ignore */ }
+    })();
+    </script>
 
     </body>
