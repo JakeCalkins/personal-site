@@ -4,7 +4,6 @@
 # Generated
 dist/
 node_modules/
-package-lock.json
 
 # WIP
 TODO.md
