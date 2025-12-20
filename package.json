@@ -15,7 +15,7 @@
     "test:unit": "ts-node ./scripts/test/generate-md.test.ts",
     "test:visual": "ts-node ./scripts/test/visual-regression.ts",
     "test": "npm run test:unit && npm run test:visual",
-    "coverage": "tsc --project tsconfig.json --outDir .ts-out-tests && nyc --extension .js node .ts-out-tests/test/generate-md.test.js && rm -rf .ts-out-tests",
+    "coverage": "tsc --project tsconfig.json --outDir .ts-out-tests && nyc --extension .js --all --include \".ts-out-tests/**/*.js\" node .ts-out-tests/test/generate-md.test.js && rm -rf .ts-out-tests",
     "lint:js": "eslint \"src/**/*.js\" \"scripts/**/*.ts\" --ext .js,.ts",
     "lint:css": "stylelint \"src/assets/scss/**/*.scss\" --custom-syntax postcss-scss --allow-empty-input",
     "lint": "npm run lint:js && npm run lint:css"
