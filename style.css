@@ -160,6 +160,15 @@ body[data-theme="t5"] {
 }
 
 .title h2 {
+    /* Improve contrast for FAB and its menu in dark mode */
+    .fab{background-color:color-mix(in srgb,var(--accent-color) 80%, var(--surface-solid) 20%)!important;color:var(--surface-solid)!important}
+    .fab .bar{background:var(--surface-solid)!important}
+    .fab.open{background-color:color-mix(in srgb,var(--accent-color) 70%, var(--surface-solid) 30%)!important;color:var(--surface-solid)!important}
+    .fab-menu .item{background:color-mix(in srgb,var(--surface-solid) 12%, var(--surface-color) 88%);color:var(--accent-color);border-color:color-mix(in srgb,var(--surface-solid) 6%,var(--border-color) 94%)}
+    .fab-menu .item .label{color:var(--accent-color)}
+    .fab-menu .icon-wrap{background:transparent;border-color:color-mix(in srgb,var(--surface-solid) 8%,var(--border-color) 92%)}
+    .fab-menu.open .item:hover{background:color-mix(in srgb,var(--surface-solid) 18%,var(--accent-color) 82%);color:var(--surface-solid)}
+    .fab-backdrop{background:rgba(0,0,0,0.55)}
     margin: 0;
     font-size: 1.05rem;
     font-weight: 300; /* lighter subheading */
