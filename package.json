@@ -1,0 +1,11 @@
+{
+  "name": "personal-site-build",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:md": "node ./scripts/generate-md.js"
+  },
+  "dependencies": {
+    "marked": "^5.1.1"
+  }
+}
