@@ -11,58 +11,6 @@ body {
 }
 
 /* end of imports */
-    body[data-theme="t2"] {
-        --bg: linear-gradient(135deg,#1a1210 0%, #0f0a08 100%);
-        --text-color: #f6efe6;
-        --muted-color: #9aa4ad;
-        --surface-color: rgba(18,12,10,0.6);
-        --surface-solid: #120c0a;
-        --accent-color: #f6efe6;
-        --border-color: rgba(255,255,255,0.18);
-    }
-    body[data-theme="t3"] {
-        --bg: linear-gradient(135deg,#021126 0%, #041529 100%);
-        --text-color: #e8f3ff;
-        --muted-color: #9fb1c9;
-        --surface-color: rgba(2,6,18,0.6);
-        --surface-solid: #020612;
-        --accent-color: #cfe6ff;
-        --border-color: rgba(255,255,255,0.18);
-    }
-    body[data-theme="t4"] {
-        --bg: linear-gradient(135deg,#120c10 0%, #0b0709 100%);
-        --text-color: #faeef6;
-        --muted-color: #a8999f;
-        --surface-color: rgba(18,12,14,0.6);
-        --surface-solid: #120c0e;
-        --accent-color: #faeef6;
-        --border-color: rgba(255,255,255,0.18);
-    }
-    body[data-theme="t5"] {
-        --bg: linear-gradient(135deg,#06221a 0%, #03120f 100%);
-        --text-color: #e6fbf5;
-        --muted-color: #80b39f;
-        --surface-color: rgba(3,10,8,0.6);
-        --surface-solid: #030a08;
-        --accent-color: #bff6e8;
-        --border-color: rgba(255,255,255,0.18);
-    }
-
-    /* Dark-mode interactive control adjustments */
-    /* Thicker, more opaque light borders for controls (but not the FAB) */
-    .social,
-    .profile-banner,
-    .banner-icon-wrap,
-    .fab-menu .item,
-    .fab-menu .icon-wrap {
-        border: 2px solid rgba(255,255,255,0.40) !important;
-        box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset, 0 8px 22px rgba(0,0,0,0.40);
-    }
-
-    /* The floating action button should not have an inner border in dark mode; keep its outer outline if desired */
-    .fab {
-        border: none !important;
-    }
 
 
 /* Responsive layout for small screens */

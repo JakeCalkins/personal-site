@@ -5,7 +5,8 @@
   "scripts": {
     "build:md": "node ./scripts/generate-md.js",
     "build:css": "sass src/assets/scss/style.scss src/assets/css/style.css --no-source-map --style=expanded",
-    "start:local": "sh -lc \"(npm ci || npm i) && npm run build:css && npm run build:md && python3 -m http.server 8000 --directory dist\""
+    "start:local": "sh -lc \"(npm ci || npm i) && npm run build:css && npm run build:md && python3 -m http.server 8000 --directory dist\"",
+    "check": "npm run build:css && npm run build:md"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
