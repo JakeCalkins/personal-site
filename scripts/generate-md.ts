@@ -132,7 +132,30 @@ async function main(): Promise<void> {
     await fs.copyFile(path.join(cwd, 'CNAME'), path.join(distDir, 'CNAME'));
   } catch (e) { /* ignore */ }
 
-  console.log('Built site written to ./dist (index.html + assets)');
+  // Generate robots.txt
+  const robotsTxt = `User-agent: *
+Allow: /
+
+Sitemap: https://www.jakecalkins.com/sitemap.xml
+`;
+  await fs.writeFile(path.join(distDir, 'robots.txt'), robotsTxt, 'utf8');
+
+  // Generate sitemap.xml
+  const sitemapUrl = 'https://www.jakecalkins.com/';
+  const lastmod = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+  const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>${sitemapUrl}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
+`;
+  await fs.writeFile(path.join(distDir, 'sitemap.xml'), sitemapXml, 'utf8');
+
+  console.log('Built site written to ./dist (index.html + assets + robots.txt + sitemap.xml)');
 }
 
 main().catch(err => {
