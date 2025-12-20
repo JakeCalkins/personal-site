@@ -11,17 +11,17 @@
   }
 
   .fab:active { transform: translateY(1px); }
-  .fab .bar { width: 22px; height: 2.5px; background: currentColor; border-radius: 2px; position: absolute; left: 50%; transform-origin: center; transition: transform 180ms ease, opacity 160ms ease; transform: translateX(-50%); }
+  .fab .bar { width: 22px; height: 2.5px; background: currentColor; border-radius: 2px; position: absolute; left: 50%; transform-origin: center; transition: transform 180ms ease, opacity 160ms ease; transform: translateX(-50%); opacity: 1 !important; }
   /* Evenly space the three bars around the vertical center (accounts for bar height). */
   .fab .bar:nth-child(1) { top: calc(50% - 7.25px); }
   .fab .bar:nth-child(2) { top: calc(50% - 1.25px); }
   .fab .bar:nth-child(3) { top: calc(50% + 4.75px); }
 
   .fab.open { background-color: color-mix(in srgb, var(--surface-solid) 30%, var(--accent-color) 70%); color: var(--surface-solid); box-shadow: 0 14px 36px 4px rgba(2,6,23,0.26), 0 0 0 3px rgba(255,255,255,0.96); }
+  .fab.open .bar { background: var(--surface-solid) !important; }
   .fab.open .bar:nth-child(1) { top: 50%; transform: translateX(-50%) rotate(45deg); }
   .fab.open .bar:nth-child(2) { opacity: 0; transform: translateX(-50%) scaleX(0); }
   .fab.open .bar:nth-child(3) { top: 50%; transform: translateX(-50%) rotate(-45deg); }
-  .fab.open .bar { background: var(--surface-solid) !important; }
 
   .fab:hover:not(.open) { transform: translateY(-2px); background-color: color-mix(in srgb, var(--surface-solid) 35%, var(--accent-color) 65%); box-shadow: 0 16px 44px 8px rgba(2,6,23,0.30), 0 0 0 3px rgba(255,255,255,0.96); }
   .fab:hover:not(.open) .bar { transform: translateX(-50%) scaleX(0.88); }
@@ -38,7 +38,6 @@
   .fab-menu.open .item { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
   .fab-menu .icon-wrap svg { opacity: 1; display: block; }
   .fab-menu.open .item:hover { transform: translateY(-6px) scale(1.02); background: color-mix(in srgb, var(--surface-solid) 75%, var(--accent-color) 25%); box-shadow: 0 12px 32px rgba(2,6,23,0.12); }
-  .fab .bar { opacity: 1 !important; }
   .fab-menu .icon-wrap { width:40px; height:40px; display:inline-grid; place-items:center; border-radius:50%; border:1px solid var(--border-color); background:transparent; }
   .fab-menu a { text-decoration: none; color: inherit; display:flex; align-items:center; gap:0.9rem; }
 }

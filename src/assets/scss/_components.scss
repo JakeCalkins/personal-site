@@ -65,8 +65,9 @@ button.social.theme-toggle.is-dark { background: var(--accent-color); color: var
 /* Visually-hidden helper for accessibility */
 .visually-hidden {
   position: absolute !important;
-  height: 1px; width: 1px; overflow: hidden;
-  clip: rect(1px, 1px, 1px, 1px); white-space: nowrap; border: 0; padding: 0; margin: -1px;
+  width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap; border: 0; padding: 0; margin: -1px;
 }
 
 /* Toggle icon visibility: show moon by default, show sun when dark */
@@ -88,8 +89,8 @@ button.social.theme-toggle.is-dark { background: var(--accent-color); color: var
 }
 
 @media (forced-colors: active) {
-  .fab, .fab-menu .item, .social, .profile-banner { forced-color-adjust: none; background: Window; color: WindowText; border-color: GrayText; }
+  .fab, .fab-menu .item, .social, .profile-banner { forced-color-adjust: none; background: Window; color: CanvasText; border-color: GrayText; }
   .fab:focus-visible, .fab-menu .item a:focus-visible { outline: 2px solid Highlight; }
 }
 
-.profile-banner:hover .banner-icon { }
+/* intentionally empty (no extra hover behavior beyond banner hover) */

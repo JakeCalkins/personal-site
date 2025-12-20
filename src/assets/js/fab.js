@@ -11,7 +11,7 @@
 
       if (!fabButton || !fabMenu || !fabBackdrop) return;
 
-      function setOpen(open) {
+      var setOpen = function(open) {
         if (open) {
           fabButton.classList.add('open');
           fabMenu.classList.add('open');
@@ -29,7 +29,7 @@
         }
       }
 
-      function toggleFab() { setOpen(!fabButton.classList.contains('open')); }
+      var toggleFab = function() { setOpen(!fabButton.classList.contains('open')); };
 
       fabButton.addEventListener('click', function(e){ e.preventDefault(); toggleFab(); });
       fabBackdrop.addEventListener('click', function(){ setOpen(false); });

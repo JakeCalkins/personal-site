@@ -21,7 +21,7 @@
       try {
         var saved = localStorage.getItem('theme');
         if (saved) { body.setAttribute('data-theme', saved); return; }
-      } catch (e) { /* ignore storage errors */ }
+      } catch (e) { void 0; }
 
       // If user prefers system dark, don't force a light random theme; allow
       // CSS `prefers-color-scheme` rules to take effect instead.
@@ -33,7 +33,7 @@
       var themes = ['t1','t2','t3','t4','t5'];
       var pick = themes[Math.floor(Math.random()*themes.length)];
       body.setAttribute('data-theme', pick);
-    } catch (e) { /* fail silently */ }
+    } catch (e) { void 0; }
   }
 
   function initThemeToggle() {
@@ -42,7 +42,7 @@
       if (!btn) return;
       var body = document.body;
 
-      function reflect() {
+      var reflect = function() {
         var cur = body.getAttribute('data-theme');
         if (cur === 'dark') {
           btn.setAttribute('aria-pressed', 'true');
@@ -51,15 +51,15 @@
           btn.setAttribute('aria-pressed', 'false');
           btn.classList.remove('is-dark');
         }
-      }
+      };
 
       btn.addEventListener('click', function () {
         var cur = body.getAttribute('data-theme');
         if (cur === 'dark') {
-          try { localStorage.setItem('theme', 'light'); } catch (e) {}
+          try { localStorage.setItem('theme', 'light'); } catch (e) { void 0; }
           body.setAttribute('data-theme', 'light');
         } else {
-          try { localStorage.setItem('theme', 'dark'); } catch (e) {}
+          try { localStorage.setItem('theme', 'dark'); } catch (e) { void 0; }
           body.setAttribute('data-theme', 'dark');
         }
         reflect();
@@ -67,7 +67,7 @@
 
       // initial reflection
       reflect();
-    } catch (e) { /* ignore */ }
+    } catch (e) { void 0; }
   }
 
   // Defer execution until parsing complete — script will be loaded with `defer`.

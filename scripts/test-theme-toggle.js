@@ -14,7 +14,7 @@ const fs = require('fs').promises;
     await fs.mkdir(outDir, { recursive: true });
 
     // initial state
-    const beforeAttr = await page.evaluate(() => document.body.getAttribute('data-theme'));
+    await page.evaluate(() => document.body.getAttribute('data-theme'));
     const beforePath = path.join(outDir, 'ci-theme-before.png');
     await page.screenshot({ path: beforePath, fullPage: true });
 
