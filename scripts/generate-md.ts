@@ -103,6 +103,22 @@ async function main(): Promise<void> {
   await fs.mkdir(distDir, { recursive: true });
 
   const outIndex = path.join(distDir, 'index.html');
+  
+  // Minify HTML if in production mode
+  if (process.env.NODE_ENV === 'production') {
+    const { minify } = await import('html-minifier-terser');
+    index = await minify(index, {
+      collapseWhitespace: true,
+      removeComments: true,
+      removeRedundantAttributes: true,
+      removeScriptTypeAttributes: true,
+      removeStyleLinkTypeAttributes: true,
+      useShortDoctype: true,
+      minifyCSS: false, // CSS already minified
+      minifyJS: false,  // JS already minified
+    });
+  }
+  
   await fs.writeFile(outIndex, index, 'utf8');
 
   const assetsSrc = path.join(srcDir, 'assets');

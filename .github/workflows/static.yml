@@ -67,10 +67,8 @@ jobs:
           node-version: '22'
       - name: Install deps
         run: npm ci
-      - name: Build CSS
-        run: npm run build:css
-      - name: Build markdown
-        run: npm run build:md
+      - name: Build site (optimized)
+        run: npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
