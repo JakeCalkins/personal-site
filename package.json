@@ -3,7 +3,7 @@
   "version": "2.1.0",
   "private": true,
   "scripts": {
-    "build:md": "NODE_ENV=production ts-node ./scripts/generate-md.ts",
+    "build:md": "NODE_ENV=production ts-node ./src/scripts/generate-md.ts",
     "build:ts-client": "tsc --project tsconfig.client.json",
     "build:css": "sass src/assets/scss/style.scss src/assets/css/style.css --no-source-map --style=expanded",
     "minify:css": "postcss src/assets/css/style.css --use cssnano --no-map --output src/assets/css/style.css",
@@ -11,15 +11,15 @@
     "start:local": "sh -lc \"(npm ci || npm i) && npm run build:css && npm run build:md && python3 -m http.server 8000 --directory dist\"",
     "build": "npm run build:ts-client && npm run build:css && npm run minify:css && npm run minify:js && npm run build:md",
     "check": "npm run build",
-    "test:theme": "ts-node ./scripts/test-theme-toggle.ts",
-    "collect-runtime-classes": "ts-node ./scripts/collect-runtime-classes.ts",
-    "coverage-css": "ts-node ./scripts/coverage-css.ts",
-    "screenshot-theme": "ts-node ./scripts/screenshot-theme.ts",
-    "test:unit": "ts-node ./tests/generate-md.test.ts",
-    "test:visual": "ts-node ./tests/visual-regression.ts",
+    "test:theme": "ts-node ./src/tests/utilities/test-theme-toggle.ts",
+    "collect-runtime-classes": "ts-node ./src/tests/utilities/collect-runtime-classes.ts",
+    "coverage-css": "ts-node ./src/tests/utilities/coverage-css.ts",
+    "screenshot-theme": "ts-node ./src/tests/utilities/screenshot-theme.ts",
+    "test:unit": "ts-node ./src/tests/generate-md.test.ts",
+    "test:visual": "ts-node ./src/tests/visual-regression.ts",
     "test": "npm run test:unit && npm run test:visual",
     "coverage": "tsc --project tsconfig.json --outDir .ts-out-tests && nyc --extension .js --all --include \".ts-out-tests/**/*.js\" node .ts-out-tests/generate-md.test.js && rm -rf .ts-out-tests",
-    "lint:js": "eslint \"scripts/**/*.ts\" \"src/assets/ts/**/*.ts\"",
+    "lint:js": "eslint \"src/scripts/**/*.ts\" \"src/assets/ts/**/*.ts\"",
     "lint:css": "stylelint \"src/assets/scss/**/*.scss\" --custom-syntax postcss-scss --allow-empty-input",
     "lint": "npm run lint:js && npm run lint:css"
   },
@@ -29,11 +29,11 @@
       ".js"
     ],
     "include": [
-      "scripts/**/*.ts",
-      "src/**/*.ts"
+      "src/scripts/**/*.ts",
+      "src/assets/ts/**/*.ts"
     ],
     "exclude": [
-      "tests/**",
+      "src/tests/**",
       "dist/**",
       "node_modules/**"
     ],

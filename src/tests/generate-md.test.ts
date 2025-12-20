@@ -32,7 +32,7 @@ async function run() {
   await fs.writeFile(path.join(cwd, 'content', 'test.md'), md, 'utf8');
 
   // run generator using the repository's dependencies but with cwd set to the tmp dir
-  const genSrc = path.join(repoRoot, 'scripts', 'generate-md.ts');
+  const genSrc = path.join(repoRoot, 'src', 'scripts', 'generate-md.ts');
   try {
     const tsNode = path.join(repoRoot, 'node_modules', '.bin', 'ts-node');
     await execPromise(`${tsNode} ${JSON.stringify(genSrc)}`, { cwd });

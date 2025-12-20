@@ -38,3 +38,6 @@ Phase 6 Tasks
 		- Comments added throughout lib/ modules focusing on implementation intent, not obvious mechanics.
 
 - [ ] There are way too many scripts in the package.json Simplify where you can, while preserving functionality. Evaluate if a given script is necessary and consolidate if you need.
+- [ ] remove outdated or unused files. if they are files generated during build, evaluate if they should be committed and if not, remove from the project and add to the gitignore.
+
+- [ ] Update the README. Rewrite sections so that it sounds like I wrote the README for my own site, in the first person.
