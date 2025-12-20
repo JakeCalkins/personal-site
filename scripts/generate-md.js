@@ -127,9 +127,20 @@ async function main() {
       for (const ent of entries) {
         const s = path.join(srcRoot, ent.name);
         const d = path.join(destRoot, ent.name);
+        // Skip copying SCSS source files or the `scss` directory into `dist`.
+        // We only need compiled CSS in `assets/css` for the built site.
+        if (ent.name === 'scss' && ent.isDirectory()) {
+          // intentionally skip scss source directory
+          continue;
+        }
+
         if (ent.isDirectory()) {
           await copyRecursive(s, d);
         } else if (ent.isFile()) {
+          if (s.endsWith('.scss')) {
+            // skip individual scss files if present
+            continue;
+          }
           await fs.copyFile(s, d);
         }
       }

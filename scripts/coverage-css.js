@@ -59,6 +59,15 @@ async function run() {
 
   const { usedClasses, usedIds } = await collectHtmlClassesIds(dist);
   const selectors = await extractCssSelectors(cssPath);
+  // If runtime selectors were captured by Puppeteer, include them as used.
+  try {
+    const runtimePath = path.join(dist, 'coverage', 'runtime-selectors.json');
+    const rt = JSON.parse(await fs.readFile(runtimePath, 'utf8'));
+    (rt.classes || []).forEach(c => usedClasses.add(c));
+    (rt.ids || []).forEach(i => usedIds.add(i));
+  } catch (e) {
+    // no runtime selectors captured; that's fine
+  }
 
   const unused = [];
   for (const sel of selectors) {
