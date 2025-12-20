@@ -7,6 +7,8 @@ node_modules/
 src/assets/css/
 src/assets/js/*.js
 src/assets/js/*.ts
+coverage/
+.nyc_output/
 
 # WIP
 TODO.md
