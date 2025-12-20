@@ -1,0 +1,228 @@
+@use 'all' as *;
+
+/* base body rule preserved from original stylesheet */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 110%;
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text-color);
+}
+
+/* end of imports */
+
+
+/* Responsive layout for small screens */
+@media (max-width: 640px) {
+    .grid-container {
+        grid-template-areas:
+            'title'
+            'links'
+            'text-area'
+            'empty'
+            'foot';
+        margin-top: 2rem;
+        width: 94%;
+    }
+
+    .quick-links {
+        justify-content: flex-start;
+        gap: 0.75rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .title h1 { font-size: 1.6rem; }
+    .title h2 { font-size: 0.95rem; }
+
+    /* Keep footer right-aligned at all screen sizes */
+    .footer { grid-column: auto; justify-self: end; text-align: right; }
+}
+
+/* Lighter footer text */
+.footer p { margin: 0.25rem 0; font-weight: 300; color: var(--muted-color); }
+
+/* Banner that links to LinkedIn */
+.profile-banner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    box-sizing: border-box;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    background: var(--surface-color);
+    color: var(--accent-color);
+    text-decoration: none;
+    border: 1.5px solid var(--border-color);
+    transition: background 150ms ease, transform 120ms ease, color 150ms ease, box-shadow 160ms ease;
+    box-shadow: 0 6px 14px rgba(2,6,23,0.06); /* subtle lift to indicate clickability */
+    margin-bottom: var(--section-gap);
+}
+
+.profile-banner:hover {
+    background: color-mix(in srgb, var(--surface-color) 75%, var(--accent-color) 25%);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(2,6,23,0.10);
+}
+
+.profile-banner .banner-icon {
+    width: 60%;
+    height: 60%;
+    max-width: 20px;
+    max-height: 20px;
+    display: block;
+}
+
+.banner-icon-wrap {
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: 1.5px solid var(--border-color);
+    box-sizing: border-box;
+    padding: 4px;
+    background: transparent;
+    color: var(--accent-color);
+}
+
+.profile-banner .banner-text {
+    display: inline-block;
+    font-family: 'EB Garamond', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: inherit;
+    font-style: normal;
+}
+
+/* Mobile FAB navigation (only visible on small screens) */
+@media (min-width: 641px) {
+     .mobile-nav, .fab, .fab-backdrop, .fab-menu { display: none !important; visibility: hidden !important; }
+}
+
+@media (max-width: 640px) {
+     /* hide desktop-only social icons, but keep the LinkedIn banner visible
+         at all sizes (explicitly show it on small screens). */
+     .quick-links { display: none !important; }
+     .profile-banner { display: inline-flex !important; }
+
+    /* Floating action button */
+    /* Ensure the FAB sits above the menu when open */
+    .mobile-nav { position: fixed; left: 1rem; bottom: 1rem; z-index: 92; }
+
+    .fab {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        display: inline-grid;
+        place-items: center;
+        /* stronger, more saturated monochromatic background (accent-forward) */
+        background-color: color-mix(in srgb, var(--surface-solid) 55%, var(--accent-color) 45%) !important;
+        color: var(--surface-solid); /* keep icon (bars) high-contrast */
+        border: 2px solid var(--border-color);
+        /* primary drop shadow + persistent light outline ring for contrast */
+        box-shadow: 0 14px 36px 4px rgba(2,6,23,0.22), 0 0 0 3px rgba(255,255,255,0.92);
+        cursor: pointer;
+        transition: transform 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+        position: relative; /* for absolutely-positioned bars */
+        z-index: 93; /* above .fab-menu */
+        overflow: visible;
+    }
+
+    .fab:active { transform: translateY(1px); }
+
+    /* Hamburger bars: use absolute centering for consistent rotation */
+    .fab .bar {
+        width: 22px;
+        height: 2.5px;
+        background: currentColor;
+        border-radius: 2px;
+        position: absolute;
+        left: 50%;
+        transform-origin: center;
+        transition: transform 180ms ease, opacity 160ms ease;
+        transform: translateX(-50%);
+    }
+    .fab .bar:nth-child(1) { top: calc(50% - 7px); }
+    .fab .bar:nth-child(2) { top: calc(50% - 1px); }
+    .fab .bar:nth-child(3) { top: calc(50% + 6px); }
+
+    /* Open (X) state: rotate in place (centered). Darker background for clear white X */
+    .fab.open { background-color: color-mix(in srgb, var(--surface-solid) 30%, var(--accent-color) 70%); color: var(--surface-solid); box-shadow: 0 14px 36px 4px rgba(2,6,23,0.26), 0 0 0 3px rgba(255,255,255,0.96); }
+    .fab.open .bar:nth-child(1) { top: 50%; transform: translateX(-50%) rotate(45deg); }
+    .fab.open .bar:nth-child(2) { opacity: 0; transform: translateX(-50%) scaleX(0); }
+    .fab.open .bar:nth-child(3) { top: 50%; transform: translateX(-50%) rotate(-45deg); }
+
+    /* Ensure bars are solid colored (white or theme-surface) when open */
+    .fab.open .bar { background: var(--surface-solid) !important; }
+
+    /* Hover: slightly stronger accent + tighter icon when not open */
+    .fab:hover:not(.open) {
+        transform: translateY(-2px);
+        background-color: color-mix(in srgb, var(--surface-solid) 35%, var(--accent-color) 65%);
+        box-shadow: 0 16px 44px 8px rgba(2,6,23,0.30), 0 0 0 3px rgba(255,255,255,0.96);
+    }
+    .fab:hover:not(.open) .bar { transform: translateX(-50%) scaleX(0.88); }
+
+    /* When the FAB menu is expanded, apply the same hover "lift" and accent
+       saturation to the FAB as when it's in hamburger mode. This keeps
+       interactive feedback consistent for users. */
+    .fab.open:hover {
+        transform: translateY(-2px);
+        background-color: color-mix(in srgb, var(--surface-solid) 35%, var(--accent-color) 65%);
+        box-shadow: 0 16px 44px 8px rgba(2,6,23,0.30), 0 0 0 3px rgba(255,255,255,0.96);
+    }
+
+    /* Subtle safeguard: keep bars fully opaque on hover when open */
+    .fab.open:hover .bar { opacity: 1 !important; }
+    /* Backdrop that darkens the page when menu open */
+    .fab-backdrop {
+        position: fixed; inset: 0; background: rgba(2,6,23,0.35); opacity: 0; transition: opacity 180ms ease; pointer-events: none; z-index:50;
+    }
+    .fab-backdrop.visible { opacity:1; pointer-events:auto; }
+
+    /* Floating menu: ascending items from bottom-left, left-justified */
+    .fab-menu {
+        position: fixed; left: 1rem; bottom: calc(1rem + 96px); z-index: 80; /* increased spacing from FAB; menu sits below FAB */
+        display: flex; flex-direction: column-reverse; gap: 0.9rem; align-items: flex-start; pointer-events: none;
+        font-family: 'EB Garamond', ui-serif, Georgia, serif; /* ensure EB Garamond for menu text */
+    }
+
+    .fab-menu .item {
+        pointer-events: none; /* not interactive until menu opens */
+        display: flex; align-items: center; gap: 1rem;
+        background: var(--surface-solid); /* fully opaque surface color */
+        color: var(--accent-color);
+        padding: 0.6rem 0.9rem; border-radius: 10px; border: 1px solid var(--border-color);
+        box-shadow: 0 10px 24px rgba(2,6,23,0.08);
+        transform: translateY(14px) scale(0.98); opacity: 0; transition: transform 220ms cubic-bezier(.2,.9,.3,1), opacity 180ms ease;
+        font-size: 1.30rem; /* increased ~4px */
+        font-weight: 700; /* bolder for emphasis */
+    }
+
+    .fab-menu.open { pointer-events: auto; }
+    /* When open, menu items appear fully opaque; FAB icon stays fully opaque */
+    .fab-menu.open .item { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
+
+    /* Menu icons should be fully opaque */
+    .fab-menu .icon-wrap svg { opacity: 1; display: block; }
+
+    /* When the menu is open, also give each menu item the same hover
+       elevation & subtle accent wash that the FAB gets when hovered in
+       hamburger mode. This provides consistent affordance for touch
+       and pointer users. */
+    .fab-menu.open .item:hover {
+        transform: translateY(-6px) scale(1.02);
+        background: color-mix(in srgb, var(--surface-solid) 75%, var(--accent-color) 25%);
+        box-shadow: 0 12px 32px rgba(2,6,23,0.12);
+    }
+
+    /* Ensure FAB hamburger/X bars remain fully opaque */
+    .fab .bar { opacity: 1 !important; }
+
+    .fab-menu .icon-wrap { width:40px; height:40px; display:inline-grid; place-items:center; border-radius:50%; border:1px solid var(--border-color); background:transparent; }
+
+    .fab-menu a { text-decoration: none; color: inherit; display:flex; align-items:center; gap:0.9rem; }
+}
+
+/* end of style */

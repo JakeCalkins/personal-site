@@ -1,8 +1,15 @@
 #!/usr/bin/env node
 const fs = require('fs').promises;
 const path = require('path');
-const { marked } = require('marked');
-const yaml = require('js-yaml');
+const { unified } = require('unified');
+const remarkParse = (require('remark-parse') && (require('remark-parse').default || require('remark-parse')));
+const remarkGfm = (require('remark-gfm') && (require('remark-gfm').default || require('remark-gfm')));
+const remarkRehype = (require('remark-rehype') && (require('remark-rehype').default || require('remark-rehype')));
+const rehypeStringify = (require('rehype-stringify') && (require('rehype-stringify').default || require('rehype-stringify')));
+const rehypeSlug = (require('rehype-slug') && (require('rehype-slug').default || require('rehype-slug')));
+const rehypeAutolink = (require('rehype-autolink-headings') && (require('rehype-autolink-headings').default || require('rehype-autolink-headings')));
+const remarkFrontmatter = (require('remark-frontmatter') && (require('remark-frontmatter').default || require('remark-frontmatter')));
+const matter = (require('gray-matter') && (require('gray-matter').default || require('gray-matter')));
 
 async function main() {
   const cwd = process.cwd();
@@ -22,30 +29,15 @@ async function main() {
     return;
   }
 
-  // Read files, parse optional YAML front-matter, and collect metadata
+  // Read files, extract YAML front-matter using `gray-matter`, and collect metadata
+  // We still include `remark-frontmatter` in the pipeline for completeness.
   const items = [];
   for (const file of mdFiles) {
     const src = path.join(contentDir, file);
     const raw = await fs.readFile(src, 'utf8');
-    let content = raw;
-    let meta = {};
-    if (raw.trim().startsWith('---')) {
-      // find closing `---`
-      const end = raw.indexOf('\n---', 3);
-      const altEnd = raw.indexOf('\n...', 3);
-      const fmEnd = end !== -1 ? end : (altEnd !== -1 ? altEnd : -1);
-      if (fmEnd !== -1) {
-        const fmRaw = raw.slice(0, fmEnd + 4);
-        try {
-          // strip leading/trailing --- markers
-          const yamlText = fmRaw.replace(/^---\s*\n/, '').replace(/\n---\s*$/, '');
-          meta = yaml.load(yamlText) || {};
-          content = raw.slice(fmEnd + 4);
-        } catch (e) {
-          console.warn('Failed parsing YAML front-matter for', file, e.message);
-        }
-      }
-    }
+    const parsed = matter(raw);
+    const meta = parsed.data || {};
+    const content = parsed.content || '';
 
     // fallback title and order
     const title = meta.title || file.replace(/\.md$/i, '').replace(/[-_]/g, ' ');
@@ -62,15 +54,31 @@ async function main() {
     return a.file.localeCompare(b.file);
   });
 
-    const parts = items.map(item => {
-      const html = marked.parse(item.md);
-      const slug = item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-      // If the rendered HTML already starts with an H1/H2, don't prepend a duplicate header.
-      const trimmed = html.trim();
-      const hasLeadingHeading = /^<h[12][\s>]/i.test(trimmed);
-      const headerHtml = hasLeadingHeading ? '' : `<header class="md-section-header"><h2>${item.title}</h2></header>\n`;
-      return `<!-- from: ${item.file} -->\n<section class="md-section" id="${slug}" data-source="${item.file}">\n${headerHtml}${html}\n</section>`;
-    });
+  // Use remark + rehype to convert markdown -> HTML. This is modern, extensible,
+  // and avoids the deprecation warnings from `marked` defaults.
+  const partsArr = [];
+  for (const item of items) {
+    const fileHtml = String(
+      await unified()
+        .use(remarkParse)
+        .use(remarkGfm)
+        .use(remarkFrontmatter)
+        .use(remarkRehype)
+        .use(rehypeSlug)
+        .use(rehypeAutolink, { behavior: 'wrap' })
+        .use(rehypeStringify)
+        .process(item.md)
+    );
+
+    const slug = item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    // If the rendered HTML already starts with an H1/H2, don't prepend a duplicate header.
+    const trimmed = fileHtml.trim();
+    const hasLeadingHeading = /^<h[12][\s>]/i.test(trimmed);
+    const headerHtml = hasLeadingHeading ? '' : `<header class="md-section-header"><h2>${item.title}</h2></header>\n`;
+    partsArr.push(`<!-- from: ${item.file} -->\n<section class="md-section" id="${slug}" data-source="${item.file}">\n${headerHtml}${fileHtml}\n</section>`);
+  }
+
+  const parts = partsArr;
 
   const injected = parts.join('\n\n');
 

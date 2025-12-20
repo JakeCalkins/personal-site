@@ -1,8 +1,30 @@
 # Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install deps
+        run: npm ci
+      - name: Run checks (build validation)
+        run: npm run check
+
 on:
-  # Runs on pushes targeting the default branch
+    needs: verify
+    environment:
   push:
     branches: ["master"]
 
@@ -15,6 +37,13 @@ permissions:
   pages: write
   id-token: write
 
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
@@ -39,6 +68,8 @@ jobs:
           node-version: '18'
       - name: Install deps
         run: npm ci
+      - name: Build CSS
+        run: npm run build:css
       - name: Build markdown
         run: npm run build:md
       - name: Upload artifact

@@ -10,10 +10,6 @@ I'm a [CICS Alumnus](https://cics.umass.edu) from the University of Massachusett
 - **Cloud & Microservices:** Build resilient, scalable and efficient systems that work seamlessly in any intended environment (serverless or otherwise).
 - **Delivery & Developer Experience:** Improve developer productivity and release reliability through CI/CD, automated quality gates, and tooling that reduces deployment friction.
 
-### Impact
-- Delivered front‑end experiences used by thousands in a low‑latency claims environment.
-- Increased deployment speed and uptime by modernizing pipelines and adding production‑grade observability.
-- Blend UX‑first product thinking with backend engineering to speed delivery while maintaining long‑term maintainability.
-
 ### Looking for
-Open to Full‑Stack or Front‑End roles (Massachusetts or remote). If your team is building modern front‑end experiences or cloud‑based systems, message me on LinkedIn to connect.
+
+Full‑Stack or Front‑End roles (remote, MA, Southern NH). If your team is building modern front‑end experiences or cloud‑based systems, let's connect via LinkedIn.
