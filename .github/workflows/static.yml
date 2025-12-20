@@ -39,6 +39,8 @@ jobs:
           node-version: '18'
       - name: Install deps
         run: npm ci
+      - name: Build CSS
+        run: npm run build:css
       - name: Build markdown
         run: npm run build:md
       - name: Upload artifact
