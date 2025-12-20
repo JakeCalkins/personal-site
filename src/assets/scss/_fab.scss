@@ -18,7 +18,6 @@
   .fab .bar:nth-child(3) { top: calc(50% + 5px); }
 
   .fab.open { background-color: color-mix(in srgb, var(--surface-solid) 30%, var(--accent-color) 70%); color: var(--surface-solid); box-shadow: 0 14px 36px 4px rgba(2,6,23,0.26), 0 0 0 3px rgba(255,255,255,0.96); }
-  .fab.open .bar { background: var(--surface-solid) !important; }
   .fab.open .bar:nth-child(1) { top: 50%; transform: translateX(-50%) rotate(45deg); }
   .fab.open .bar:nth-child(2) { opacity: 0; transform: translateX(-50%) scaleX(0); }
   .fab.open .bar:nth-child(3) { top: 50%; transform: translateX(-50%) rotate(-45deg); }
