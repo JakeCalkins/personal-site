@@ -4,17 +4,28 @@ const path = require('path');
 // `unified` is ESM-only in some installs; import it dynamically inside
 // the async `main()` to avoid top-level `await` syntax errors when this
 // script is executed under CommonJS (node <type module>).
-const remarkParse = (require('remark-parse') && (require('remark-parse').default || require('remark-parse')));
-const remarkGfm = (require('remark-gfm') && (require('remark-gfm').default || require('remark-gfm')));
-const remarkRehype = (require('remark-rehype') && (require('remark-rehype').default || require('remark-rehype')));
-const rehypeStringify = (require('rehype-stringify') && (require('rehype-stringify').default || require('rehype-stringify')));
-const rehypeSlug = (require('rehype-slug') && (require('rehype-slug').default || require('rehype-slug')));
-const rehypeAutolink = (require('rehype-autolink-headings') && (require('rehype-autolink-headings').default || require('rehype-autolink-headings')));
-const remarkFrontmatter = (require('remark-frontmatter') && (require('remark-frontmatter').default || require('remark-frontmatter')));
-const matter = (require('gray-matter') && (require('gray-matter').default || require('gray-matter')));
+// We'll dynamically import remark/rehype plugins inside `main()` below.
 
 async function main() {
   const { unified } = await import('unified');
+  // Dynamic-import remark/rehype plugins (some are ESM-only). Use
+  // `.default` when present, otherwise fall back to the module itself.
+  const remarkParseMod = await import('remark-parse');
+  const remarkParse = remarkParseMod.default || remarkParseMod;
+  const remarkGfmMod = await import('remark-gfm');
+  const remarkGfm = remarkGfmMod.default || remarkGfmMod;
+  const remarkRehypeMod = await import('remark-rehype');
+  const remarkRehype = remarkRehypeMod.default || remarkRehypeMod;
+  const rehypeStringifyMod = await import('rehype-stringify');
+  const rehypeStringify = rehypeStringifyMod.default || rehypeStringifyMod;
+  const rehypeSlugMod = await import('rehype-slug');
+  const rehypeSlug = rehypeSlugMod.default || rehypeSlugMod;
+  const rehypeAutolinkMod = await import('rehype-autolink-headings');
+  const rehypeAutolink = rehypeAutolinkMod.default || rehypeAutolinkMod;
+  const remarkFrontmatterMod = await import('remark-frontmatter');
+  const remarkFrontmatter = remarkFrontmatterMod.default || remarkFrontmatterMod;
+  const matterMod = await import('gray-matter');
+  const matter = matterMod.default || matterMod;
   const cwd = process.cwd();
   const contentDir = path.join(cwd, 'content');
   const srcDir = path.join(cwd, 'src');
