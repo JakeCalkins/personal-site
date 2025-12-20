@@ -170,13 +170,18 @@ body[data-theme="t5"] {
     .fab-menu.open .item:hover{background:color-mix(in srgb,var(--surface-solid) 18%,var(--accent-color) 82%);color:var(--surface-solid)}
     .fab-backdrop{background:rgba(0,0,0,0.55)}
 
-    /* Lighter borders for interactive controls in dark mode */
+    /* Stronger, lighter borders for interactive controls in dark mode */
     .social,
     .profile-banner,
     .fab,
     .fab-menu .item,
     .fab-menu .icon-wrap {
-        border-color: color-mix(in srgb, var(--surface-solid) 22%, var(--border-color) 78%) !important;
+        border-color: color-mix(in srgb, var(--surface-solid) 40%, var(--border-color) 60%) !important;
+    }
+
+    /* Optional thin highlight to make edges pop slightly on very dark backgrounds */
+    .social, .profile-banner, .fab, .fab-menu .item {
+        box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset, 0 6px 18px rgba(0,0,0,0.36);
     }
     margin: 0;
     font-size: 1.05rem;
