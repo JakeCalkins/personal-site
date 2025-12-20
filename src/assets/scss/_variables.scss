@@ -62,3 +62,19 @@ body[data-theme="t5"] {
   --accent-color: #064b39;
   --border-color: rgba(6,36,25,0.06);
 }
+
+/* Respect system dark mode by providing a sensible dark baseline. This
+   sets root variables when the user prefers dark color scheme. If a
+   specific `body[data-theme="..."]` is present it will continue to
+   take precedence. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: linear-gradient(135deg,#08070a 0%, #0b0b0d 100%);
+    --text-color: #ece8e3;
+    --muted-color: #9aa4ad;
+    --surface-color: rgba(10,10,12,0.6);
+    --surface-solid: #0b0b0d;
+    --accent-color: #dfe8f8;
+    --border-color: rgba(255,255,255,0.12);
+  }
+}

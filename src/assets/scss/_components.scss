@@ -42,6 +42,19 @@ a, .content a { color: var(--accent-color); }
   transform: translateY(0);
 }
 
+/* Headings wrapped by autolink anchors (rehype-autolink with `wrap`)
+   may render as <h2><a href="#id">Title</a></h2>. Ensure the anchor
+   doesn't inherit default link styles (underline/color) while keeping
+   it keyboard-accessible. */
+h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1 > a::before, h2 > a::before, h3 > a::before, h4 > a::before, h5 > a::before, h6 > a::before {
+  content: '\00a0'; /* keep spacing consistent; icon handled elsewhere */
+}
+
 .profile-banner {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem; box-sizing: border-box;
   padding: 0.4rem 0.9rem; border-radius: 6px; background: var(--surface-color); color: var(--accent-color); text-decoration: none;
