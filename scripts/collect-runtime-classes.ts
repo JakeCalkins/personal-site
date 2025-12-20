@@ -25,7 +25,7 @@ import path from 'path';
 
     try {
       await page.click('#fab-button');
-      await page.waitForTimeout(250);
+      await new Promise(resolve => setTimeout(resolve, 250));
     } catch (e) { /* ignore if not present */ }
 
     const afterOpen = await page.evaluate(() => {
