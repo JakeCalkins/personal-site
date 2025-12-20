@@ -46,11 +46,9 @@
         var cur = body.getAttribute('data-theme');
         if (cur === 'dark') {
           btn.setAttribute('aria-pressed', 'true');
-          btn.textContent = '☀️';
           btn.classList.add('is-dark');
         } else {
           btn.setAttribute('aria-pressed', 'false');
-          btn.textContent = '🌙';
           btn.classList.remove('is-dark');
         }
       }

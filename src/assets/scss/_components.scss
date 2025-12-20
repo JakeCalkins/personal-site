@@ -44,35 +44,23 @@ a, .content a { color: var(--accent-color); }
 
 /* Title controls (toggle) — position to the right of title on larger screens,
    and inline with header flow on small screens. Button matches site theme. */
-.title-controls {
-  grid-area: title; /* share the title grid area so it sits adjacent */
-  justify-self: end;
-  align-self: center;
+.theme-toggle { /* make toggle match the other circular social icons */
+  appearance: none; background: transparent; border: none; padding: 0; margin: 0;
 }
 
-.theme-toggle {
-  appearance: none;
-  border: 1px solid var(--border-color);
-  background: var(--surface-color);
-  color: var(--accent-color);
-  width: 40px;
-  height: 36px;
-  border-radius: 8px;
-  display: inline-grid;
-  place-items: center;
-  cursor: pointer;
-  font-size: 1.05rem;
-  line-height: 1;
-  padding: 0;
-  transition: background 140ms ease, transform 120ms ease, box-shadow 160ms ease;
+.theme-toggle .icon { width: 20px; height: 20px; display: block; }
+
+/* make sure button.social shares the same visual treatment as anchor.social */
+button.social.theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 50%; background: var(--surface-color);
+  color: var(--accent-color); text-decoration: none; border: 1px solid var(--border-color);
+  transition: background 150ms ease, transform 120ms ease, color 150ms ease;
 }
 
-.theme-toggle:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(2,6,23,0.06); }
-.theme-toggle[aria-pressed='true'] { background: var(--accent-color); color: var(--surface-solid); border-color: color-mix(in srgb, var(--accent-color) 40%, var(--border-color) 60%); }
+button.social.theme-toggle:hover { background: color-mix(in srgb, var(--surface-color) 75%, var(--accent-color) 25%); transform: translateY(-2px); }
 
-@media (max-width: 640px) {
-  .title-controls { justify-self: start; margin-top: 0.5rem; }
-}
+button.social.theme-toggle.is-dark { background: var(--accent-color); color: var(--surface-solid); }
 
 /* Accessibility, forced-colors, and focus-visible rules */
 @media (max-width: 640px) {
