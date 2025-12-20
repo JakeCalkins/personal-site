@@ -117,7 +117,7 @@ async function main(): Promise<void> {
         if (ent.isDirectory()) {
           await copyRecursive(s, d);
         } else if (ent.isFile()) {
-          if (s.endsWith('.scss')) continue;
+          if (s.endsWith('.scss') || s.endsWith('.ts')) continue;
           await fs.copyFile(s, d);
         }
       }
