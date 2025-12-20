@@ -7,8 +7,8 @@ import { exec } from 'child_process';
 function execPromise(cmd: string, opts: any = {}) {
   return new Promise<{ stdout: string; stderr: string }>((resolve, reject) => {
     exec(cmd, opts, (err, stdout, stderr) => {
-      if (err) return reject({ err, stdout, stderr });
-      resolve({ stdout, stderr });
+      if (err) return reject({ err, stdout: String(stdout), stderr: String(stderr) });
+      resolve({ stdout: String(stdout), stderr: String(stderr) });
     });
   });
 }
@@ -31,14 +31,11 @@ async function run() {
   const md = `---\ntitle: Test Page\n---\n\n# Heading\n\nThis is a test.`;
   await fs.writeFile(path.join(cwd, 'content', 'test.md'), md, 'utf8');
 
-  // copy generator script into tmp/scripts
+  // run generator using the repository's dependencies but with cwd set to the tmp dir
   const genSrc = path.join(repoRoot, 'scripts', 'generate-md.ts');
-  const genDst = path.join(cwd, 'scripts', 'generate-md.ts');
-  await fs.copyFile(genSrc, genDst);
-
-  // run generator using ts-node (assumes dev deps installed)
   try {
-    await execPromise(`npx ts-node ./scripts/generate-md.ts`, { cwd });
+    const tsNodeRegister = path.join(repoRoot, 'node_modules', 'ts-node', 'register');
+    await execPromise(`node -r ${JSON.stringify(tsNodeRegister)} ${JSON.stringify(genSrc)}`, { cwd });
   } catch (err: any) {
     console.error('Generator failed', err.stderr || err);
     throw new Error('generate-md execution failed');
