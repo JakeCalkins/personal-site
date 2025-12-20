@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap");
 /* Core CSS variables (kept as CSS variables so runtime theme switching still works) */
 :root {
@@ -185,6 +186,36 @@ body[data-theme=t5] {
 
 a, .content a {
   color: var(--accent-color);
+}
+
+/* Style for `rehype-autolink-headings` anchors: keep headings readable
+   and avoid displaying the entire heading as a link. We wrap the heading
+   content with an anchor; make the anchor visually unobtrusive and show
+   a small anchor icon on hover/focus. */
+.rehype-autolink {
+  /* make anchor not change heading color or remove underline */
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+}
+
+/* When wrapping, the anchor will be the same size as the heading text.
+   Show a faint link icon to the left on hover/focus for discoverability. */
+.rehype-autolink::before {
+  content: "\\2693"; /* small anchor-like glyph (⚓) — can be changed to SVG */
+  opacity: 0;
+  margin-right: 0.45rem;
+  font-size: 0.85em;
+  vertical-align: middle;
+  transition: opacity 120ms ease, transform 120ms ease;
+  transform: translateY(1px);
+  color: var(--muted-color);
+}
+
+.rehype-autolink:hover::before,
+.rehype-autolink:focus::before {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .profile-banner {
