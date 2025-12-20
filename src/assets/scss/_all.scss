@@ -7,3 +7,4 @@
   This file aggregates SCSS partials so the entry stylesheet can use
   `@use 'all' as *;` and avoid the deprecated `@import` API.
 */
+@use 'theme-dark';

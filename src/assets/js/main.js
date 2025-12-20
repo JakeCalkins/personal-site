@@ -36,8 +36,39 @@
     } catch (e) { /* fail silently */ }
   }
 
+  function initThemeToggle() {
+    try {
+      var btn = document.getElementById('theme-toggle');
+      if (!btn) return;
+      var body = document.body;
+
+      function reflect() {
+        var cur = body.getAttribute('data-theme');
+        if (cur === 'dark') btn.setAttribute('aria-pressed', 'true');
+        else btn.setAttribute('aria-pressed', 'false');
+      }
+
+      btn.addEventListener('click', function () {
+        var cur = body.getAttribute('data-theme');
+        if (cur === 'dark') {
+          // switch to system/light: remove explicit dark value and save 'light'
+          try { localStorage.setItem('theme', 'light'); } catch (e) {}
+          body.removeAttribute('data-theme');
+        } else {
+          try { localStorage.setItem('theme', 'dark'); } catch (e) {}
+          body.setAttribute('data-theme', 'dark');
+        }
+        reflect();
+      });
+
+      // initial reflection
+      reflect();
+    } catch (e) { /* ignore */ }
+  }
+
   // Defer execution until parsing complete — script will be loaded with `defer`.
   setYear();
   pickTheme();
+  initThemeToggle();
 
 })();
