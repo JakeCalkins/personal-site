@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 const fs = require('fs').promises;
 const path = require('path');
-const { unified } = await import('unified');
+// `unified` is ESM-only in some installs; import it dynamically inside
+// the async `main()` to avoid top-level `await` syntax errors when this
+// script is executed under CommonJS (node <type module>).
 const remarkParse = (require('remark-parse') && (require('remark-parse').default || require('remark-parse')));
 const remarkGfm = (require('remark-gfm') && (require('remark-gfm').default || require('remark-gfm')));
 const remarkRehype = (require('remark-rehype') && (require('remark-rehype').default || require('remark-rehype')));
@@ -12,6 +14,7 @@ const remarkFrontmatter = (require('remark-frontmatter') && (require('remark-fro
 const matter = (require('gray-matter') && (require('gray-matter').default || require('gray-matter')));
 
 async function main() {
+  const { unified } = await import('unified');
   const cwd = process.cwd();
   const contentDir = path.join(cwd, 'content');
   const srcDir = path.join(cwd, 'src');
