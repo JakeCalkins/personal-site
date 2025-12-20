@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build:md": "node ./scripts/generate-md.js"
+    "build:md": "node ./scripts/generate-md.js",
+    "start:local": "sh -lc \"(npm ci || npm i) && npm run build:md && python3 -m http.server 8000 --directory dist\""
   },
   "dependencies": {
     "marked": "^5.1.1",

@@ -1,4 +1,13 @@
-dist/
-TODO.md
+# Devtools
 .vscode/
+
+# Generated
+dist/
 node_modules/
+package-lock.json
+
+# WIP
+TODO.md
+
+# Debug
+*.tar

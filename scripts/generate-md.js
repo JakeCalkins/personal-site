@@ -7,6 +7,7 @@ const yaml = require('js-yaml');
 async function main() {
   const cwd = process.cwd();
   const contentDir = path.join(cwd, 'content');
+  const srcDir = path.join(cwd, 'src');
   let files = [];
   try {
     files = await fs.readdir(contentDir);
@@ -69,8 +70,14 @@ async function main() {
 
   const injected = parts.join('\n\n');
 
-  const indexPath = path.join(cwd, 'index.html');
-  let index = await fs.readFile(indexPath, 'utf8');
+  const indexPath = path.join(srcDir, 'index.html');
+  let index;
+  try {
+    index = await fs.readFile(indexPath, 'utf8');
+  } catch (e) {
+    console.warn('Template src/index.html not found — aborting.');
+    return;
+  }
 
   if (!index.includes('<!-- MD_CONTENT -->')) {
     console.warn('Placeholder <!-- MD_CONTENT --> not found in index.html — aborting injection.');
@@ -88,16 +95,32 @@ async function main() {
   await fs.writeFile(outIndex, index, 'utf8');
 
   // Copy static assets that the site depends on into dist
-  const staticFiles = ['style.css', 'favicon.svg', 'CNAME'];
-  for (const f of staticFiles) {
-    const src = path.join(cwd, f);
+  // Keep the same relative paths as in src/index.html, so copy entire assets/ tree if present.
+  const assetsSrc = path.join(srcDir, 'assets');
+  async function copyRecursive(srcRoot, destRoot) {
     try {
-      const dest = path.join(distDir, f);
-      await fs.copyFile(src, dest);
+      const entries = await fs.readdir(srcRoot, { withFileTypes: true });
+      await fs.mkdir(destRoot, { recursive: true });
+      for (const ent of entries) {
+        const s = path.join(srcRoot, ent.name);
+        const d = path.join(destRoot, ent.name);
+        if (ent.isDirectory()) {
+          await copyRecursive(s, d);
+        } else if (ent.isFile()) {
+          await fs.copyFile(s, d);
+        }
+      }
     } catch (e) {
-      // ignore missing files
+      // swallow missing assets folder
     }
   }
+
+  await copyRecursive(assetsSrc, path.join(distDir, 'assets'));
+
+  // Also copy CNAME if present at repo root
+  try {
+    await fs.copyFile(path.join(cwd, 'CNAME'), path.join(distDir, 'CNAME'));
+  } catch (e) { /* ignore */ }
 
   console.log('Built site written to ./dist (index.html + assets)');
 }
