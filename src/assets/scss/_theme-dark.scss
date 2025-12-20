@@ -11,3 +11,14 @@ body[data-theme="dark"] {
   --accent-color: #dfe8f8;
   --border-color: rgba(255,255,255,0.12);
 }
+
+/* Explicit light theme when user chooses 'light' to override system dark */
+body[data-theme="light"] {
+  --bg: linear-gradient(135deg, #eef7f6 0%, #fafbfd 100%);
+  --text-color: #0f1720;
+  --muted-color: #475569;
+  --surface-color: rgba(255,255,255,0.7);
+  --surface-solid: #ffffff;
+  --accent-color: #0f1720;
+  --border-color: rgba(15,23,32,0.06);
+}

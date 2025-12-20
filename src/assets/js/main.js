@@ -57,7 +57,7 @@
         var cur = body.getAttribute('data-theme');
         if (cur === 'dark') {
           try { localStorage.setItem('theme', 'light'); } catch (e) {}
-          body.removeAttribute('data-theme');
+          body.setAttribute('data-theme', 'light');
         } else {
           try { localStorage.setItem('theme', 'dark'); } catch (e) {}
           body.setAttribute('data-theme', 'dark');
