@@ -9,6 +9,7 @@ src/assets/js/*.js
 src/assets/js/*.ts
 coverage/
 .nyc_output/
+.ts-out-tests/
 
 # WIP
 TODO.md
