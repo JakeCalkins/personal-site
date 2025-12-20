@@ -1,7 +1,6 @@
 # Project TODO & Roadmap
 
 Phase 4 Tasks
-- [-] Re-improve the dark theme contrast so that the borders around icons and the FAB menu are lighter (and thicker than in light mode)
 - [ ] Refactor the generate-md.js so it's written in TypeScript
 - [ ] Refactor the fab.js so it's written in TypeScript
 - [ ] Refactor the main.js so it's written in TypeScript
