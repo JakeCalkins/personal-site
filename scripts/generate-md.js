@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const fs = require('fs').promises;
 const path = require('path');
-const { unified } = require('unified');
+const { unified } = await import('unified');
 const remarkParse = (require('remark-parse') && (require('remark-parse').default || require('remark-parse')));
 const remarkGfm = (require('remark-gfm') && (require('remark-gfm').default || require('remark-gfm')));
 const remarkRehype = (require('remark-rehype') && (require('remark-rehype').default || require('remark-rehype')));
