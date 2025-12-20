@@ -12,9 +12,10 @@
 
   .fab:active { transform: translateY(1px); }
   .fab .bar { width: 22px; height: 2.5px; background: currentColor; border-radius: 2px; position: absolute; left: 50%; transform-origin: center; transition: transform 180ms ease, opacity 160ms ease; transform: translateX(-50%); }
-  .fab .bar:nth-child(1) { top: calc(50% - 7px); }
-  .fab .bar:nth-child(2) { top: calc(50% - 1px); }
-  .fab .bar:nth-child(3) { top: calc(50% + 6px); }
+  /* Evenly space the three bars around the vertical center (accounts for bar height). */
+  .fab .bar:nth-child(1) { top: calc(50% - 7.25px); }
+  .fab .bar:nth-child(2) { top: calc(50% - 1.25px); }
+  .fab .bar:nth-child(3) { top: calc(50% + 4.75px); }
 
   .fab.open { background-color: color-mix(in srgb, var(--surface-solid) 30%, var(--accent-color) 70%); color: var(--surface-solid); box-shadow: 0 14px 36px 4px rgba(2,6,23,0.26), 0 0 0 3px rgba(255,255,255,0.96); }
   .fab.open .bar:nth-child(1) { top: 50%; transform: translateX(-50%) rotate(45deg); }

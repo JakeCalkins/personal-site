@@ -20,8 +20,6 @@ async function main() {
   const rehypeStringify = rehypeStringifyMod.default || rehypeStringifyMod;
   const rehypeSlugMod = await import('rehype-slug');
   const rehypeSlug = rehypeSlugMod.default || rehypeSlugMod;
-  const rehypeAutolinkMod = await import('rehype-autolink-headings');
-  const rehypeAutolink = rehypeAutolinkMod.default || rehypeAutolinkMod;
   const remarkFrontmatterMod = await import('remark-frontmatter');
   const remarkFrontmatter = remarkFrontmatterMod.default || remarkFrontmatterMod;
   const matterMod = await import('gray-matter');
@@ -79,7 +77,6 @@ async function main() {
         .use(remarkFrontmatter)
         .use(remarkRehype)
         .use(rehypeSlug)
-        .use(rehypeAutolink, { behavior: 'wrap' })
         .use(rehypeStringify)
         .process(item.md)
     );
