@@ -1,9 +1,6 @@
 # Project TODO & Roadmap
 
 Phase 4 Tasks
-- [ ] Update to the latest versions of everything so that vulnerabilities are remediated. Require NodeJS 22 or 24 (if 24 has issues, go to 22)
-- [ ] Remove .DS_Store from the repository, add to .gitignore
-- [ ] Generate a robots.txt and sitemap.
 - [ ] Update the README
 - [ ] Add tooltips on hover to the icons in the top right in desktop view
 - [ ] Reduce generated filesize in dist/ and generated directory size.

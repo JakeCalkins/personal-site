@@ -30,10 +30,10 @@ async function run() {
     // wait a short time for theme transition — use a safe fallback if typing differs
     try {
       // some puppeteer versions provide waitForTimeout
-      // @ts-ignore
+      // @ts-expect-error - waitForTimeout may not be in types but exists at runtime
       if (typeof page.waitForTimeout === 'function') await (page as any).waitForTimeout(250);
       else await new Promise((r) => setTimeout(r, 250));
-    } catch (e) {
+    } catch {
       await new Promise((r) => setTimeout(r, 250));
     }
   }
