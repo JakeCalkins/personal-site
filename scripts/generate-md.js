@@ -62,11 +62,15 @@ async function main() {
     return a.file.localeCompare(b.file);
   });
 
-  const parts = items.map(item => {
-    const html = marked.parse(item.md);
-    const slug = item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-    return `<!-- from: ${item.file} -->\n<section class="md-section" id="${slug}" data-source="${item.file}">\n<header class=\"md-section-header\"><h2>${item.title}</h2></header>\n${html}\n</section>`;
-  });
+    const parts = items.map(item => {
+      const html = marked.parse(item.md);
+      const slug = item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      // If the rendered HTML already starts with an H1/H2, don't prepend a duplicate header.
+      const trimmed = html.trim();
+      const hasLeadingHeading = /^<h[12][\s>]/i.test(trimmed);
+      const headerHtml = hasLeadingHeading ? '' : `<header class="md-section-header"><h2>${item.title}</h2></header>\n`;
+      return `<!-- from: ${item.file} -->\n<section class="md-section" id="${slug}" data-source="${item.file}">\n${headerHtml}${html}\n</section>`;
+    });
 
   const injected = parts.join('\n\n');
 
