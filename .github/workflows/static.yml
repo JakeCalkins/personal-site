@@ -35,6 +35,9 @@ jobs:
         run: npm ci
       - name: Run checks (build validation)
         run: npm run check
+      - name: Run theme toggle test (Puppeteer)
+        run: |
+          npm run test:theme
 
   deploy:
     needs: verify
