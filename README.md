@@ -1,116 +1,219 @@
 # personal-site
 
-This repository contains a small, single-page personal landing site for Jake
-Calkins. It is intentionally minimal and fast — a typographic landing page with
-links to social profiles and a short bio. The site is built and deployed using
-GitHub Pages Actions.
+A minimal, fast, single-page personal landing site for Jake Calkins featuring a typographic design with dark theme support, responsive layout, and markdown-powered content. Built with TypeScript and deployed automatically via GitHub Pages.
 
-## Contents
+## Features
 
-- `index.html` — main page shell and placeholder for generated content
-- `style.css` — site styling and theme variables (dark mode + responsive rules)
-- `content/` — markdown files (new) that are converted into HTML
-- `scripts/generate-md.js` — build script that converts markdown into HTML
-- `package.json` — build dependencies and scripts (`npm run build:md`)
-- `.github/workflows/static.yml` — Pages workflow that runs the build and deploys `dist/`
+- **Dark/Light Theme Toggle** — Automatic dark mode detection with manual override
+- **Responsive Design** — Mobile-first with FAB navigation and desktop icon bar
+- **Markdown Content** — Write content in Markdown with YAML front-matter support
+- **TypeScript Build System** — Type-safe build scripts and client code
+- **Automated CI/CD** — GitHub Actions workflow with linting, testing, and coverage
+- **SEO Ready** — Generates `robots.txt` and `sitemap.xml` automatically
 
-## Content authoring
+## Project Structure
 
-- Add content as Markdown files into the `content/` directory (create it at the repo root if it doesn't exist).
-- Each markdown file may include an optional YAML front-matter block at the top to set metadata for that section. Supported front-matter fields:
-	- `title`: string — used as the section title (defaults to the filename)
-	- `order`: number — lower values appear earlier in the page (defaults to filename order)
+```
+├── src/
+│   ├── index.html              # Main page template
+│   ├── assets/
+│   │   ├── scss/               # SCSS source files (variables, themes, components)
+│   │   ├── css/                # Generated CSS (gitignored)
+│   │   ├── ts/                 # TypeScript source for client-side runtime
+│   │   ├── js/                 # Compiled JS (gitignored)
+│   │   └── icons/              # SVG icons and images
+├── content/                    # Markdown content files
+├── scripts/                    # TypeScript build scripts
+│   ├── generate-md.ts          # Main build script (markdown → HTML)
+│   ├── test/                   # Test scripts (unit + visual regression)
+│   └── *.ts                    # Utility scripts (CSS coverage, screenshots, etc.)
+├── dist/                       # Generated site output (gitignored)
+├── package.json                # Dependencies and npm scripts
+├── tsconfig.json               # TypeScript config for scripts
+├── tsconfig.client.json        # TypeScript config for client code
+└── eslint.config.mjs           # ESLint 9 flat config
 
-Example:
-```md
+```
+
+## Requirements
+
+- **Node.js 22+** (v22 or v24 recommended)
+- npm or compatible package manager
+
+## Getting Started
+
+### Install Dependencies
+
+```bash
+npm ci
+```
+
+### Build the Site
+
+```bash
+# Build CSS from SCSS
+npm run build:css
+
+# Build HTML from markdown content (also copies assets, generates robots.txt + sitemap.xml)
+npm run build:md
+
+# Build client TypeScript (generates src/assets/js/*.js)
+npm run build:ts-client
+```
+
+### Local Development
+
+```bash
+# Quick start: install, build, and serve
+npm run start:local
+
+# Or manually:
+npm run build:css && npm run build:md
+python3 -m http.server 8000 --directory dist
+# Open http://localhost:8000
+```
+
+## Content Authoring
+
+Add Markdown files to the `content/` directory. Each file can include optional YAML front-matter:
+
+```markdown
 ---
-title: About
+title: About Me
 order: 10
 ---
 
-Here is the content for the About section.
+# About
+
+This is my story...
 ```
 
-## Build & CI
+**Supported front-matter fields:**
+- `title`: Section title (defaults to filename)
+- `order`: Sort order (lower values appear first; defaults to alphabetical)
 
-- The build performs the following during CI (and can be run locally):
-	1. Read `content/*.md` and parse optional YAML front-matter.
-	2. Convert Markdown to HTML using `marked`.
-	3. Inject the generated HTML into `index.html` at the placeholder `<!-- MD_CONTENT -->`.
-	4. Write the built site to `dist/index.html` and copy static assets (`style.css`, `favicon.svg`, `CNAME`) into `dist/`.
-	5. The Pages workflow uploads the `dist/` artifact and deploys the site.
+The build script processes all `.md` files, converts them to HTML using [unified](https://unifiedjs.com/) + [remark](https://remark.js.org/) + [rehype](https://github.com/rehypejs/rehype), and injects them into `index.html` at the `<!-- MD_CONTENT -->` placeholder.
 
-## Local testing
+## Available Scripts
+
+### Build Commands
+- `npm run build:css` — Compile SCSS to CSS
+- `npm run build:md` — Generate HTML from markdown and copy assets
+- `npm run build:ts-client` — Compile client TypeScript to JavaScript
+- `npm run check` — Run full build validation (CSS + markdown)
+
+### Testing & Quality
+- `npm run test:unit` — Run generator integration test
+- `npm run test:visual` — Capture visual screenshots (Puppeteer)
+- `npm run test:theme` — Test theme toggle behavior
+- `npm run test` — Run all tests (unit + visual)
+- `npm run coverage` — Generate code coverage report
+- `npm run lint` — Run ESLint + Stylelint
+- `npm run lint:js` — Run ESLint on TypeScript files
+- `npm run lint:css` — Run Stylelint on SCSS files
+
+### Utility Scripts
+- `npm run collect-runtime-classes` — Analyze runtime DOM classes
+- `npm run coverage-css` — Generate CSS coverage report
+- `npm run screenshot-theme` — Capture theme screenshots
+
+## Testing & Coverage
+
+### Unit Tests
+
+Run the markdown generator integration test:
 
 ```bash
-# install dependencies
-npm ci
-
-# build markdown into dist/
-npm run build:md
-
-# preview locally
-python3 -m http.server 8000 --directory dist
-# then open http://localhost:8000
+npm run test:unit
 ```
 
-## Notes and next steps
+This creates a temporary workspace, runs the generator, and validates the output.
 
-- The generated HTML is injected into the `.content` area of the page so existing styling (dark mode, responsive rules, FAB, etc.) is preserved.
-- If you'd like per-markdown-page routes (separate HTML pages per file), RSS, or pagination, I can extend the build to generate multiple files and an index.
+### Visual Regression Tests
 
-License: personal
-
-### Testing & Coverage
-
-- Run the unit and visual checks locally:
+Capture screenshots of the site in light and dark themes:
 
 ```bash
- npm ci
- npm run build:css
- npm run build:md
- npm run test:unit    # runs the generate-md integration test
- npm run test:visual  # runs the Puppeteer visual capture (saves snapshots in `tests/snapshots`)
+npm run test:visual
 ```
 
-- Visual baseline workflow:
-	- The first time you run `npm run test:visual`, the script will save `tests/snapshots/latest-*.png`. If no baselines exist, it will promote those to `baseline-*.png` automatically.
-	- Review the generated baseline images in `tests/snapshots`. If they look acceptable, commit them to the repo.
-	- To approve a new baseline after intentional design changes: replace `baseline-*.png` with the corresponding `latest-*.png` and commit.
+**Visual baseline workflow:**
+1. First run saves screenshots to `tests/snapshots/latest-light.png` and `latest-dark.png`
+2. If no baselines exist, the script promotes them to `baseline-*.png`
+3. Review the baseline images and commit them if acceptable
+4. Future runs compare against baselines using `pixelmatch` and output diff images
+5. To approve new baselines: replace `baseline-*.png` with `latest-*.png` and commit
 
-- Coverage reports:
+### Code Coverage
+
+Generate coverage reports with NYC:
 
 ```bash
- npm run coverage
- open coverage/lcov-report/index.html
+npm run coverage
+open coverage/lcov-report/index.html
 ```
 
-The CI workflow now runs coverage during the `verify` job and uploads the `coverage/` folder as an artifact named `coverage-report`.
-# personal-site
+Coverage reports are also generated during CI and uploaded as artifacts.
 
-This repository contains a small, single-page personal landing site for Jake
-Calkins. It is intentionally minimal and fast — a typographic landing page with
-links to social profiles and a short bio.
+## CI/CD Pipeline
 
-Contents
-- `index.html` — main page markup
-- `style.css` — site styling and theme variables
-- `favicon.svg` / other image assets
-- `umass-cics-logo.svg` — UMass placeholder logo (replace with official artwork if available)
-- `umass-cics-logo.svg` — UMass placeholder logo (replace with official artwork if available)
+The GitHub Actions workflow (`.github/workflows/static.yml`) runs on every push to `master` and includes:
 
-Quick development
+### Verify Job
+- Linting (ESLint + Stylelint)
+- Build validation
+- Unit tests with coverage
+- Visual regression test (Puppeteer)
+- Uploads coverage report as artifact
 
-1. Open `index.html` in your browser for local editing and preview.
-2. The repository uses the official GitHub Pages Actions workflow to build and
-	deploy the site. The CI workflow performs any necessary minification and
-	publishes the site automatically on push to `master` (see `.github/workflows`).
+### Deploy Job
+- Builds CSS and markdown
+- Deploys `dist/` to GitHub Pages
 
-Notes
-- The minifier is intentionally lightweight (no third-party packages). For
-	production quality minification you can replace it with a build toolchain
-	(esbuild, terser, cssnano, html-minifier) if desired.
-- Favicons are provided as SVG; generate PNG/ICO fallbacks if you need wider
-	compatibility (ImageMagick or similar tools can convert SVG to PNG/ICO).
+**Node.js version:** 22 (configured in workflow)
 
-License: personal
+## SEO & Metadata
+
+The build automatically generates:
+- **`robots.txt`** — Allows all crawlers, references sitemap
+- **`sitemap.xml`** — XML sitemap with homepage URL and metadata
+- **`CNAME`** — Custom domain configuration (jakecalkins.com)
+
+These files are created in `dist/` during `npm run build:md`.
+
+## Architecture Notes
+
+### TypeScript
+
+- **Scripts** (`scripts/*.ts`) — Build tooling, tests, and utilities
+- **Client code** (`src/assets/ts/*.ts`) — Runtime behavior (theme toggle, FAB)
+- **Dual tsconfigs** — `tsconfig.json` for scripts, `tsconfig.client.json` for browser code
+
+Compiled JavaScript is gitignored; the build generates it on-demand.
+
+### Styling
+
+- **SCSS** source in `src/assets/scss/` organized by partials:
+  - `_variables.scss` — CSS custom properties and design tokens
+  - `_theme-dark.scss` — Dark theme overrides
+  - `_components.scss`, `_fab.scss`, etc. — Component styles
+- Compiled to `src/assets/css/style.css` (gitignored)
+- Uses CSS custom properties for theming
+- Mobile-first responsive design with FAB for small screens
+
+### Linting
+
+- **ESLint 9** with flat config (`eslint.config.mjs`)
+- **Stylelint** with SCSS support
+- Enforces TypeScript best practices and SCSS conventions
+
+## Development Tips
+
+- **Add new markdown files:** Drop `.md` files in `content/` and rebuild
+- **Update styles:** Edit SCSS in `src/assets/scss/`, then `npm run build:css`
+- **Modify client behavior:** Edit TypeScript in `src/assets/ts/`, then `npm run build:ts-client`
+- **Run checks before commit:** `npm run lint && npm run check && npm run test:unit`
+
+## License
+
+Personal use
