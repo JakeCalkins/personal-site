@@ -1,6 +1,6 @@
 # personal-site
 
-A minimal, fast, single-page personal landing site for Jake Calkins featuring a typographic design with dark theme support, responsive layout, and markdown-powered content. Built with TypeScript and deployed automatically via GitHub Pages.
+My minimal, fast, single-page personal landing site featuring a typographic design with dark theme support, responsive layout, and markdown-powered content. Built with TypeScript and deployed automatically via GitHub Pages.
 
 ## Features
 
