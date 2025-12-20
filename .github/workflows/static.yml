@@ -41,13 +41,11 @@ jobs:
         run: npm ci
       - name: Build markdown
         run: npm run build:md
-      - name: Pages Minify
-        uses: DrA1ex/pages-minify@v1.0.3
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          # Upload the built site directory
+          path: 'dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

@@ -41,8 +41,28 @@ async function main() {
   }
 
   index = index.replace('<!-- MD_CONTENT -->', injected);
-  await fs.writeFile(indexPath, index, 'utf8');
-  console.log('Injected markdown content into index.html');
+
+  // Ensure dist directory exists
+  const distDir = path.join(cwd, 'dist');
+  await fs.mkdir(distDir, { recursive: true });
+
+  // Write built index.html to dist (do not overwrite source index.html)
+  const outIndex = path.join(distDir, 'index.html');
+  await fs.writeFile(outIndex, index, 'utf8');
+
+  // Copy static assets that the site depends on into dist
+  const staticFiles = ['style.css', 'favicon.svg', 'CNAME'];
+  for (const f of staticFiles) {
+    const src = path.join(cwd, f);
+    try {
+      const dest = path.join(distDir, f);
+      await fs.copyFile(src, dest);
+    } catch (e) {
+      // ignore missing files
+    }
+  }
+
+  console.log('Built site written to ./dist (index.html + assets)');
 }
 
 main().catch(err => {
