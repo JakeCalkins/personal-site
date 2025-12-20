@@ -60,6 +60,32 @@ python3 -m http.server 8000 --directory dist
 - If you'd like per-markdown-page routes (separate HTML pages per file), RSS, or pagination, I can extend the build to generate multiple files and an index.
 
 License: personal
+
+### Testing & Coverage
+
+- Run the unit and visual checks locally:
+
+```bash
+ npm ci
+ npm run build:css
+ npm run build:md
+ npm run test:unit    # runs the generate-md integration test
+ npm run test:visual  # runs the Puppeteer visual capture (saves snapshots in `tests/snapshots`)
+```
+
+- Visual baseline workflow:
+	- The first time you run `npm run test:visual`, the script will save `tests/snapshots/latest-*.png`. If no baselines exist, it will promote those to `baseline-*.png` automatically.
+	- Review the generated baseline images in `tests/snapshots`. If they look acceptable, commit them to the repo.
+	- To approve a new baseline after intentional design changes: replace `baseline-*.png` with the corresponding `latest-*.png` and commit.
+
+- Coverage reports:
+
+```bash
+ npm run coverage
+ open coverage/lcov-report/index.html
+```
+
+The CI workflow now runs coverage during the `verify` job and uploads the `coverage/` folder as an artifact named `coverage-report`.
 # personal-site
 
 This repository contains a small, single-page personal landing site for Jake
