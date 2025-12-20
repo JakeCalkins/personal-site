@@ -12,6 +12,9 @@
     "collect-runtime-classes": "ts-node ./scripts/collect-runtime-classes.ts",
     "coverage-css": "ts-node ./scripts/coverage-css.ts",
     "screenshot-theme": "ts-node ./scripts/screenshot-theme.ts",
+    "test:unit": "ts-node ./scripts/test/generate-md.test.ts",
+    "test:visual": "ts-node ./scripts/test/visual-regression.ts",
+    "test": "npm run test:unit && npm run test:visual",
     "lint:js": "eslint \"src/**/*.js\" \"scripts/**/*.ts\" --ext .js,.ts",
     "lint:css": "stylelint \"src/assets/scss/**/*.scss\" --custom-syntax postcss-scss --allow-empty-input",
     "lint": "npm run lint:js && npm run lint:css"
@@ -39,5 +42,7 @@
     "stylelint-scss": "^6.13.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
+    ,"pixelmatch": "^5.3.0",
+    "pngjs": "^7.0.0"
   }
 }
