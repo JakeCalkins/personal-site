@@ -34,8 +34,8 @@ async function run() {
   // run generator using the repository's dependencies but with cwd set to the tmp dir
   const genSrc = path.join(repoRoot, 'scripts', 'generate-md.ts');
   try {
-    const tsNodeRegister = path.join(repoRoot, 'node_modules', 'ts-node', 'register');
-    await execPromise(`node -r ${JSON.stringify(tsNodeRegister)} ${JSON.stringify(genSrc)}`, { cwd });
+    const tsNode = path.join(repoRoot, 'node_modules', '.bin', 'ts-node');
+    await execPromise(`${tsNode} ${JSON.stringify(genSrc)}`, { cwd });
   } catch (err: any) {
     console.error('Generator failed', err.stderr || err);
     throw new Error('generate-md execution failed');
