@@ -84,5 +84,3 @@ h1 > a::before, h2 > a::before, h3 > a::before, h4 > a::before, h5 > a::before, 
   .fab, .fab-menu .item, .social, .profile-banner { forced-color-adjust: none; background: Window; color: WindowText; border-color: GrayText; }
   .fab:focus-visible, .fab-menu .item a:focus-visible { outline: 2px solid Highlight; }
 }
-
-.profile-banner:hover .banner-icon { }
