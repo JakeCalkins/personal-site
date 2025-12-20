@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2018",
+    "module": "ES2020",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "rootDir": "src/assets/js",
+    "outDir": "src/assets/js",
+    "allowJs": true
+  },
+  "include": ["src/assets/js/**/*.ts"]
+}

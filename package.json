@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build:md": "ts-node ./scripts/generate-md.ts",
+    "build:ts-client": "tsc --project tsconfig.client.json --outDir .ts-out && cp -a .ts-out/src/assets/js/. src/assets/js/ || true && rm -rf .ts-out",
     "build:css": "sass src/assets/scss/style.scss src/assets/css/style.css --no-source-map --style=expanded",
     "start:local": "sh -lc \"(npm ci || npm i) && npm run build:css && npm run build:md && python3 -m http.server 8000 --directory dist\"",
     "check": "npm run build:css && npm run build:md",
