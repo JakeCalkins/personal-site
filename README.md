@@ -9,20 +9,14 @@ Contents
 - `style.css` — site styling and theme variables
 - `favicon.svg` / other image assets
 - `umass-cics-logo.svg` — UMass placeholder logo (replace with official artwork if available)
-- `scripts/minify-for-gh-pages.js` — simple pre-deploy minifier that writes a
-	`dist/` directory with minified HTML/CSS/JS and copied assets (no external
-	dependencies required).
+- `umass-cics-logo.svg` — UMass placeholder logo (replace with official artwork if available)
 
 Quick development
 
 1. Open `index.html` in your browser for local editing and preview.
-2. To build a minified site for GitHub Pages or a static host, run:
-
-```bash
-# from repository root
-node scripts/minify-for-gh-pages.js
-# result will be placed in ./dist
-```
+2. The repository uses the official GitHub Pages Actions workflow to build and
+	deploy the site. The CI workflow performs any necessary minification and
+	publishes the site automatically on push to `master` (see `.github/workflows`).
 
 Notes
 - The minifier is intentionally lightweight (no third-party packages). For
