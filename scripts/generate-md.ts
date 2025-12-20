@@ -75,6 +75,7 @@ async function main(): Promise<void> {
     );
 
     const slug = item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    (item as any).slug = slug;
     const trimmed = fileHtml.trim();
     const hasLeadingHeading = /^<h[12][\s>]/i.test(trimmed);
     const headerHtml = hasLeadingHeading ? '' : `<header class="md-section-header"><h2>${item.title}</h2></header>\n`;
@@ -97,7 +98,17 @@ async function main(): Promise<void> {
     return;
   }
 
-  index = index.replace('<!-- MD_CONTENT -->', injected);
+  // Prepare page links for desktop title area and mobile FAB menu
+  const pageLinksHtml = items
+    .map((it: any) => `<a class="page-link" href="${it.slug}.html" title="${it.title}">${it.title}</a>`)
+    .join(' ');
+  const fabPageLinksHtml = items
+    .map((it: any) => `<a class="item" href="${it.slug}.html" aria-label="${it.title}" title="${it.title}"><span class="label">${it.title}</span></a>`)
+    .join('\n');
+
+  index = index.replace('<!-- MD_CONTENT -->', injected)
+               .replace('<!-- PAGE_LINKS -->', pageLinksHtml)
+               .replace('<!-- FAB_PAGE_LINKS -->', fabPageLinksHtml);
 
   const distDir = path.join(cwd, 'dist');
   await fs.mkdir(distDir, { recursive: true });
@@ -120,6 +131,46 @@ async function main(): Promise<void> {
   }
   
   await fs.writeFile(outIndex, index, 'utf8');
+
+  // Generate per-page HTML files (one page per markdown file)
+  const indexTemplate = await fs.readFile(indexPath, 'utf8');
+  for (const item of items as any[]) {
+    const singleSection = String(
+      await unified()
+        .use(remarkParse)
+        .use(remarkGfm)
+        .use(remarkFrontmatter)
+        .use(remarkRehype)
+        .use(rehypeSlug)
+        .use(rehypeStringify)
+        .process(item.md)
+    );
+    const trimmed = singleSection.trim();
+    const hasLeadingHeading = /^<h[12][\s>]/i.test(trimmed);
+    const headerHtml = hasLeadingHeading ? '' : `<header class="md-section-header"><h2>${item.title}</h2></header>\n`;
+    const section = `<!-- from: ${item.file} -->\n<section class="md-section" id="${item.slug}" data-source="${item.file}">\n${headerHtml}${singleSection}\n</section>`;
+
+    let pageHtml = indexTemplate
+      .replace('<!-- MD_CONTENT -->', section)
+      .replace('<!-- PAGE_LINKS -->', pageLinksHtml)
+      .replace('<!-- FAB_PAGE_LINKS -->', fabPageLinksHtml);
+
+    if (process.env.NODE_ENV === 'production') {
+      const { minify } = await import('html-minifier-terser');
+      pageHtml = await minify(pageHtml, {
+        collapseWhitespace: true,
+        removeComments: true,
+        removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        useShortDoctype: true,
+        minifyCSS: false,
+        minifyJS: false,
+      });
+    }
+
+    await fs.writeFile(path.join(distDir, `${item.slug}.html`), pageHtml, 'utf8');
+  }
 
   const assetsSrc = path.join(srcDir, 'assets');
   async function copyRecursive(srcRoot: string, destRoot: string) {
@@ -156,22 +207,17 @@ Sitemap: https://www.jakecalkins.com/sitemap.xml
 `;
   await fs.writeFile(path.join(distDir, 'robots.txt'), robotsTxt, 'utf8');
 
-  // Generate sitemap.xml
-  const sitemapUrl = 'https://www.jakecalkins.com/';
+  // Generate sitemap.xml (homepage + per-page URLs)
+  const baseUrl = 'https://www.jakecalkins.com';
   const lastmod = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-  const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>${sitemapUrl}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
-</urlset>
-`;
+  const urls = [
+    { loc: `${baseUrl}/`, priority: '1.0' },
+    ...((items as any[]).map(it => ({ loc: `${baseUrl}/${it.slug}.html`, priority: '0.8' })))
+  ];
+  const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>${u.priority}</priority>\n  </url>`).join('\n')}\n</urlset>\n`;
   await fs.writeFile(path.join(distDir, 'sitemap.xml'), sitemapXml, 'utf8');
 
-  console.log('Built site written to ./dist (index.html + assets + robots.txt + sitemap.xml)');
+  console.log('Built site written to ./dist (index.html + per-page HTML + assets + robots.txt + sitemap.xml)');
 }
 
 main().catch(err => {

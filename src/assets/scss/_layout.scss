@@ -17,7 +17,17 @@
 .title {
   grid-area: title;
   margin-bottom: var(--section-gap);
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 2rem;
 }
+
+.title > div { display: flex; flex-direction: column; }
+
+/* Desktop page links (inline with h1, baseline-aligned) */
+.title .page-links { display: inline-flex; gap: 1.5rem; align-items: baseline; flex: 1; justify-content: center; }
+.title .page-links .page-link { text-decoration: none; color: var(--accent-color); font-weight: 700; font-size: 1rem; white-space: nowrap; text-transform: capitalize; }
 
 .quick-links { grid-area: links; }
 .content { grid-area: text-area; }
@@ -55,6 +65,7 @@
     width: 94%;
   }
   .quick-links { display: none !important; }
+  .page-links { display: none !important; }
   .title h1 { font-size: 1.6rem; }
   .title h2 { font-size: 0.95rem; }
   .footer { grid-column: auto; justify-self: end; text-align: right; }

@@ -1,5 +1,5 @@
 /* Social links, profile banner, content spacing, and base interactive styles */
-.quick-links { display: flex; gap: 0.5rem; align-items: center; justify-content: flex-end; }
+.quick-links { display: flex; gap: 0.5rem; align-items: baseline; justify-content: flex-end; }
 
 .social {
   display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%;
