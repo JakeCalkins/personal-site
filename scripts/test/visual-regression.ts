@@ -27,7 +27,15 @@ async function run() {
   const toggler = await page.$('#theme-toggle');
   if (toggler) {
     await toggler.click();
-    await page.waitForTimeout(250);
+    // wait a short time for theme transition — use a safe fallback if typing differs
+    try {
+      // some puppeteer versions provide waitForTimeout
+      // @ts-ignore
+      if (typeof page.waitForTimeout === 'function') await (page as any).waitForTimeout(250);
+      else await new Promise((r) => setTimeout(r, 250));
+    } catch (e) {
+      await new Promise((r) => setTimeout(r, 250));
+    }
   }
   const darkPath = path.join(snapsDir, 'latest-dark.png');
   await page.screenshot({ path: darkPath, fullPage: true });
