@@ -1,4 +1,4 @@
-// fab.ts — handles the mobile FAB open/close behavior (TypeScript)
+// Handles the mobile FAB open/close behavior.
 // Deferred and tiny to avoid blocking render.
 (function () {
     'use strict';
