@@ -9,7 +9,17 @@ body[data-theme="dark"] {
   --surface-color: rgba(10,10,12,0.6);
   --surface-solid: #0b0b0d;
   --accent-color: #dfe8f8;
-  --border-color: rgba(255,255,255,0.12);
+  /* Stronger, lighter borders for dark mode to improve contrast */
+  --border-color: rgba(255, 255, 255, 0.6);
+  /* Increase border thickness for icons in dark mode; keep FAB button default */
+  --icon-border-width: 1.5px;
+    /* Restyle the FAB button specifically in dark mode: light-cream background,
+      black hamburger bars, and a thin light border (affects only the FAB icon)
+      — FAB menu items keep using `--icon-border-width`. */
+    --fab-bg: #fffaf0;
+    --fab-bar-color: #0b0b0d;
+    --fab-border-color: rgba(255,255,255,0.8);
+    --fab-border-width: 1px;
 }
 
 /* Explicit light theme when user chooses 'light' to override system dark */
