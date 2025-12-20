@@ -1,12 +1,12 @@
-#!/usr/bin/env node
-const fs = require('fs').promises;
-const path = require('path');
+#!/usr/bin/env ts-node
+import fs from 'fs/promises';
+import path from 'path';
 
-async function collectHtmlClassesIds(distDir) {
-  const usedClasses = new Set();
-  const usedIds = new Set();
+async function collectHtmlClassesIds(distDir: string) {
+  const usedClasses = new Set<string>();
+  const usedIds = new Set<string>();
 
-  async function walk(dir) {
+  async function walk(dir: string) {
     const entries = await fs.readdir(dir, { withFileTypes: true });
     for (const ent of entries) {
       const p = path.join(dir, ent.name);
@@ -28,15 +28,13 @@ async function collectHtmlClassesIds(distDir) {
   return { usedClasses, usedIds };
 }
 
-async function extractCssSelectors(cssPath) {
+async function extractCssSelectors(cssPath: string) {
   const txt = await fs.readFile(cssPath, 'utf8');
-  const selectors = new Set();
-  // Use postcss to parse only rule selectors (avoids picking up declaration values)
-  const postcss = require('postcss');
-  const root = postcss.parse(txt);
-  root.walkRules(rule => {
-    // rule.selectors is an array of selector strings
-    const sels = rule.selectors || [rule.selector];
+  const selectors = new Set<string>();
+  const postcss = await import('postcss');
+  const root = (postcss as any).parse(txt) as any;
+  root.walkRules((rule: any) => {
+    const sels: string[] = rule.selectors || [rule.selector];
     for (const s of sels) {
       for (const m of s.matchAll(/\.([A-Za-z0-9_-]+)/g)) selectors.add('.' + m[1]);
       for (const m of s.matchAll(/#([A-Za-z0-9_-]+)/g)) selectors.add('#' + m[1]);
@@ -59,17 +57,16 @@ async function run() {
 
   const { usedClasses, usedIds } = await collectHtmlClassesIds(dist);
   const selectors = await extractCssSelectors(cssPath);
-  // If runtime selectors were captured by Puppeteer, include them as used.
   try {
     const runtimePath = path.join(dist, 'coverage', 'runtime-selectors.json');
     const rt = JSON.parse(await fs.readFile(runtimePath, 'utf8'));
-    (rt.classes || []).forEach(c => usedClasses.add(c));
-    (rt.ids || []).forEach(i => usedIds.add(i));
+    (rt.classes || []).forEach((c: string) => usedClasses.add(c));
+    (rt.ids || []).forEach((i: string) => usedIds.add(i));
   } catch (e) {
-    // no runtime selectors captured; that's fine
+    // no runtime selectors captured
   }
 
-  const unused = [];
+  const unused: string[] = [];
   for (const sel of selectors) {
     if (sel.startsWith('.')) {
       const name = sel.slice(1);

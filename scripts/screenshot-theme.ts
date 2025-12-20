@@ -1,9 +1,11 @@
-#!/usr/bin/env node
-const path = require('path');
-const fs = require('fs').promises;
+#!/usr/bin/env ts-node
+import path from 'path';
+import fs from 'fs/promises';
+
 (async function(){
   try {
-    const puppeteer = require('puppeteer');
+    const puppeteerMod = await import('puppeteer');
+    const puppeteer: any = (puppeteerMod as any).default || puppeteerMod;
     const cwd = process.cwd();
     const url = 'file://' + path.join(cwd, 'dist', 'index.html');
     const browser = await puppeteer.launch({args: ['--no-sandbox','--disable-setuid-sandbox']});
@@ -16,7 +18,6 @@ const fs = require('fs').promises;
     const before = path.join(outDir, 'theme-before.png');
     await page.screenshot({ path: before, fullPage: true });
 
-    // click the theme toggle if present
     try {
       await page.click('#theme-toggle');
       await page.waitForTimeout(300);
