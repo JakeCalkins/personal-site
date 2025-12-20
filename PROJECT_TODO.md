@@ -1,11 +1,6 @@
 # Project TODO & Roadmap
 
 Phase 4 Tasks
-- [ ] Refactor the generate-md.js so it's written in TypeScript
-- [ ] Refactor the fab.js so it's written in TypeScript
-- [ ] Refactor the main.js so it's written in TypeScript
-- [ ] Add unit tests for generator and visual regression checks
-- [ ] Add code coverage reports
 - [ ] Update to the latest versions of everything so that vulnerabilities are remediated. Require NodeJS 22 or 24 (if 24 has issues, go to 22)
 - [ ] Remove .DS_Store from the repository, add to .gitignore
 - [ ] Generate a robots.txt and sitemap.
