@@ -44,14 +44,20 @@
 
       function reflect() {
         var cur = body.getAttribute('data-theme');
-        if (cur === 'dark') btn.setAttribute('aria-pressed', 'true');
-        else btn.setAttribute('aria-pressed', 'false');
+        if (cur === 'dark') {
+          btn.setAttribute('aria-pressed', 'true');
+          btn.textContent = '☀️';
+          btn.classList.add('is-dark');
+        } else {
+          btn.setAttribute('aria-pressed', 'false');
+          btn.textContent = '🌙';
+          btn.classList.remove('is-dark');
+        }
       }
 
       btn.addEventListener('click', function () {
         var cur = body.getAttribute('data-theme');
         if (cur === 'dark') {
-          // switch to system/light: remove explicit dark value and save 'light'
           try { localStorage.setItem('theme', 'light'); } catch (e) {}
           body.removeAttribute('data-theme');
         } else {
