@@ -37,6 +37,11 @@ jobs:
         run: npm run lint
       - name: Run checks (build validation)
         run: npm run check
+      - name: Run coverage (unit tests)
+        run: |
+          npm run coverage
+          # upload lcov report for artifacts (optional)
+        # optionally add artifact upload step here if desired
       - name: Run theme toggle test (Puppeteer)
         run: |
           npm run test:theme

@@ -15,9 +15,18 @@
     "test:unit": "ts-node ./scripts/test/generate-md.test.ts",
     "test:visual": "ts-node ./scripts/test/visual-regression.ts",
     "test": "npm run test:unit && npm run test:visual",
+    "coverage": "nyc npm run test:unit",
     "lint:js": "eslint \"src/**/*.js\" \"scripts/**/*.ts\" --ext .js,.ts",
     "lint:css": "stylelint \"src/assets/scss/**/*.scss\" --custom-syntax postcss-scss --allow-empty-input",
     "lint": "npm run lint:js && npm run lint:css"
+  },
+  "nyc": {
+    "extension": [".ts", ".js"],
+    "include": ["scripts/**/*.ts", "src/**/*.ts"],
+    "exclude": ["tests/**", "dist/**", "node_modules/**"],
+    "require": ["ts-node/register"],
+    "reporter": ["lcov", "text-summary"],
+    "all": true
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
@@ -41,7 +50,8 @@
     "stylelint-config-recommended-scss": "^16.0.2",
     "stylelint-scss": "^6.13.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "nyc": "^15.1.0"
     ,"pixelmatch": "^5.3.0",
     "pngjs": "^7.0.0"
   }
