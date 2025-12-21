@@ -20,9 +20,6 @@
           fabBackdrop.setAttribute('aria-hidden', 'false');
           // Make menu focusable/interactive when open
           fabMenu.removeAttribute('inert');
-          Array.prototype.forEach.call(fabMenu.querySelectorAll('a'), (a: HTMLAnchorElement) => {
-            a.removeAttribute('tabindex');
-          });
         } else {
           fabButton.classList.remove('open');
           fabMenu.classList.remove('open');
@@ -32,9 +29,6 @@
           fabBackdrop.setAttribute('aria-hidden', 'true');
           // Prevent focus on hidden menu content
           fabMenu.setAttribute('inert', '');
-          Array.prototype.forEach.call(fabMenu.querySelectorAll('a'), (a: HTMLAnchorElement) => {
-            a.setAttribute('tabindex', '-1');
-          });
         }
       };
 
