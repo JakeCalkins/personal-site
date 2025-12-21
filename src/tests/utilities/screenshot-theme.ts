@@ -13,7 +13,7 @@ import fs from 'fs/promises';
     await page.setViewport({ width: 900, height: 1200, deviceScaleFactor: 1 });
     await page.goto(url, { waitUntil: 'networkidle0' });
 
-    const outDir = path.join(cwd, 'dist', 'coverage');
+    const outDir = path.join(cwd, 'src', 'tests', 'output');
     await fs.mkdir(outDir, { recursive: true });
     const before = path.join(outDir, 'theme-before.png');
     await page.screenshot({ path: before, fullPage: true });

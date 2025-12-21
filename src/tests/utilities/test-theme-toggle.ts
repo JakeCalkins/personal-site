@@ -12,7 +12,7 @@ import fs from 'fs/promises';
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: 'networkidle0' });
 
-    const outDir = path.join(cwd, 'dist', 'coverage');
+    const outDir = path.join(cwd, 'src', 'tests', 'output');
     await fs.mkdir(outDir, { recursive: true });
 
     const beforePath = path.join(outDir, 'ci-theme-before.png');

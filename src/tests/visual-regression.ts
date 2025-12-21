@@ -16,7 +16,7 @@ async function run() {
   const page = await browser.newPage();
   await page.goto('file://' + indexPath, { waitUntil: 'networkidle0' });
 
-  const snapsDir = path.join(repoRoot, 'tests', 'snapshots');
+  const snapsDir = path.join(repoRoot, 'src', 'tests', 'output', 'snapshots');
   fs.mkdirSync(snapsDir, { recursive: true });
 
   // Light screenshot

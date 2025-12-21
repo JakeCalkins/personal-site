@@ -50,8 +50,22 @@ Phase 6 Tasks
 		- All tests passing, lint clean, build successful.
 		- Site remains visually responsive to system preference and user toggle preference.
 
-- [ ] There are way too many scripts in the package.json Simplify where you can, while preserving functionality. Evaluate if a given script is necessary and consolidate if you need.
-- [ ] remove outdated or unused files. if they are files generated during build, evaluate if they should be committed and if not, remove from the project and add to the gitignore.
+- [x] There are way too many scripts in the package.json Simplify where you can, while preserving functionality. Evaluate if a given script is necessary and consolidate if you need.
+	- Notes:
+		- Reduced from 20 scripts to 4 essential commands: `build`, `dev`, `test`, `lint`.
+		- Consolidated all build steps into single `build` script (TS compile → Sass → PostCSS minify → Terser minify → MD generation).
+		- Renamed `start:local` to `dev` for clarity (standard convention).
+		- Merged `test:unit` and `test:visual` into single `test` command.
+		- Merged `lint:js` and `lint:css` into single `lint` command.
+		- Removed redundant intermediate scripts (`check`, `build:md`, `build:ts-client`, etc.) that were only called by main scripts.
+		- Removed development utility scripts (`test:theme`, `collect-runtime-classes`, `coverage-css`, `screenshot-theme`, `coverage`) - still accessible via direct ts-node if needed.
+		- All functionality preserved: build, dev server, testing, and linting all work correctly.
+- [x] remove outdated or unused files. if they are files generated during build, evaluate if they should be committed and if not, remove from the project and add to the gitignore.
+	- Notes:
+		- Removed outdated root `index.html` (source is `src/index.html`, built output goes to `dist/`).
+		- Added `tests/snapshots/` to `.gitignore` for visual regression test screenshots.
+		- Generated files already properly gitignored: `dist/`, `.nyc_output/`, `coverage/`, `src/assets/css/`, `src/assets/js/*.js`.
+		- All source files in `src/`, all build artifacts excluded from version control.
 
 - [ ] Update the README. Rewrite sections so that it sounds like I wrote the README for my own site, in the first person.
 

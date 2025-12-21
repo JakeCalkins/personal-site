@@ -58,7 +58,7 @@ async function run() {
   const { usedClasses, usedIds } = await collectHtmlClassesIds(dist);
   const selectors = await extractCssSelectors(cssPath);
   try {
-    const runtimePath = path.join(dist, 'coverage', 'runtime-selectors.json');
+    const runtimePath = path.join(cwd, 'src', 'tests', 'output', 'runtime-selectors.json');
     const rt = JSON.parse(await fs.readFile(runtimePath, 'utf8'));
     (rt.classes || []).forEach((c: string) => usedClasses.add(c));
     (rt.ids || []).forEach((i: string) => usedIds.add(i));
@@ -77,7 +77,7 @@ async function run() {
     }
   }
 
-  const outDir = path.join(dist, 'coverage');
+  const outDir = path.join(cwd, 'src', 'tests', 'output');
   await fs.mkdir(outDir, { recursive: true });
   const outFile = path.join(outDir, 'unused-selectors.txt');
   const content = unused.length ? unused.join('\n') : 'No unused class/id selectors detected by heuristic scan.';
