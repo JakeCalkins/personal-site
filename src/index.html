@@ -4,6 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Jake Calkins - Full Stack Software Engineer with 5+ years building cloud-native services, modern front-end experiences, and scalable backends. UMass CICS alumnus seeking remote or MA/NH roles." />
+    <meta name="color-scheme" content="light dark" />
+    <!-- Open Graph -->
+    <meta property="og:title" content="Jake Calkins - Full Stack Software Engineer" />
+    <meta property="og:description" content="Full Stack Software Engineer with 5+ years building cloud-native services, modern front-end experiences, and scalable backends. UMass CICS alumnus seeking remote or MA/NH roles." />
+    <meta property="og:url" content="https://www.jakecalkins.com" />
+    <meta property="og:type" content="website" />
     <title>Jake</title>
     <!-- Preconnect to Google Fonts for faster DNS/TLS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,12 +19,45 @@
     <!-- Compiled stylesheet (built from SCSS). Kept as a single link for performance. -->
     <link rel="stylesheet" href="assets/css/style.css" media="screen">
     <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Jake Calkins",
+      "jobTitle": "Full Stack Software Engineer",
+      "url": "https://www.jakecalkins.com",
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "University of Massachusetts Amherst",
+        "department": "College of Information and Computer Sciences"
+      },
+      "sameAs": [
+        "https://github.com/jakecalkins",
+        "https://www.linkedin.com/in/jakecalkins"
+      ]
+    }
+    </script>
+    <!-- Speculation Rules for prefetching -->
+    <script type="speculationrules">
+    {
+      "prerender": [{
+        "where": {"href_matches": "/*"},
+        "eagerness": "moderate"
+      }]
+    }
+    </script>
 </head>
 <body>
     <div class="grid-container">
         <div class="title">
-            <h1>Jake Calkins</h1>
-            <h2><em>Full Stack Software Engineer</em></h2>
+            <div>
+                <h1><a href="index.html" class="title-link">Jake Calkins</a></h1>
+                <h2><em>Full Stack Software Engineer</em></h2>
+            </div>
+            <nav class="page-links" aria-label="Page links">
+                <!-- PAGE_LINKS -->
+            </nav>
         </div>
         <div class="quick-links">
             <button id="theme-toggle" class="social theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode" type="button">
@@ -94,6 +133,7 @@
             </span>
             <span class="label">LinkedIn</span>
         </a>
+        <!-- FAB_PAGE_LINKS -->
     </nav>
 
     <!-- Load tiny deferred scripts for theme/year and FAB behavior -->
