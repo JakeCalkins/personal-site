@@ -5,7 +5,7 @@
   .fab {
     width: 64px; height: 64px; border-radius: 50%; display: inline-grid; place-items: center;
     background: var(--fab-bg) !important;
-    color: var(--fab-bar-color); border: var(--fab-border-width) solid var(--fab-border-color);
+    color: var(--surface-solid); border: var(--fab-border-width) solid var(--fab-border-color);
     box-shadow: 0 14px 36px 4px rgba(2,6,23,0.22), 0 0 0 3px rgba(255,255,255,0.92);
     cursor: pointer; transition: transform 160ms ease, background-color 160ms ease, box-shadow 160ms ease; position: relative; z-index: 93; overflow: visible;
   }

@@ -14,20 +14,21 @@
     try {
       const body = document.body;
       if (!body) return;
-      if (body.getAttribute('data-theme')) return;
 
+      // Check for saved user preference first
       try {
         const saved = localStorage.getItem('theme');
-        if (saved) { body.setAttribute('data-theme', saved); return; }
+        if (saved && (saved === 'light' || saved === 'dark')) {
+          body.setAttribute('data-theme', saved);
+          return;
+        }
       } catch (e) { void 0; }
 
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        return;
+      // Respect system preference; if dark, the data-theme attribute is not needed
+      // since :root dark mode styles handle it. For light mode, explicitly set it.
+      if (window.matchMedia && !window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        body.setAttribute('data-theme', 'light');
       }
-
-      const themes = ['t1', 't2', 't3', 't4', 't5'];
-      const pick = themes[Math.floor(Math.random() * themes.length)];
-      body.setAttribute('data-theme', pick);
     } catch (e) { void 0; }
   }
 

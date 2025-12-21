@@ -37,7 +37,22 @@ Phase 6 Tasks
 		- **Modularity trade-off**: +70 net lines (194 → 264 total) for significantly improved maintainability and readability.
 		- Comments added throughout lib/ modules focusing on implementation intent, not obvious mechanics.
 
+- [x] Remove the random color theming on refresh. Refactor the HTML, CSS and scripts as you see fit so that only the essentials are there. Choose the cream colored theme (like the Zen browser or Claude AI websites) for light mode, and a black background with the cream and grey accents in darkmode.
+	- Notes:
+		- Removed all random theme selection logic and t1-t5 color palettes from `src/assets/ts/main.ts`.
+		- Simplified theme logic: respects system `prefers-color-scheme` preference, allows user override via toggle button.
+		- Updated `src/assets/scss/_variables.scss`: now only defines light (cream) and dark (black) themes.
+		- Light mode: cream background (#fffaf0) with dark text and accents.
+		- Dark mode: black background (#0a0a0a-#121212) with cream accents (#fffaf0) for links and highlights.
+		- Grey accents (#9aa4ad) used consistently in both modes for muted text.
+		- FAB button styling: lighter background in dark mode for visibility, hamburger bars in dark color.
+		- Removed redundant theme selectors in `_theme-dark.scss`, kept only `dark` theme definition.
+		- All tests passing, lint clean, build successful.
+		- Site remains visually responsive to system preference and user toggle preference.
+
 - [ ] There are way too many scripts in the package.json Simplify where you can, while preserving functionality. Evaluate if a given script is necessary and consolidate if you need.
 - [ ] remove outdated or unused files. if they are files generated during build, evaluate if they should be committed and if not, remove from the project and add to the gitignore.
 
 - [ ] Update the README. Rewrite sections so that it sounds like I wrote the README for my own site, in the first person.
+
+- [ ] Rewrite the test.md file (and rename it) so it serves as a page explaining this personal website, what it's supposed to do, and provides technical information (timestamped to a certain commit and date/time) as to how it works and why I implemented it that way.
