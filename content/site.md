@@ -1,13 +1,13 @@
 ---
 title: How This Site Works
-order: 20
+order: 2
 ---
 
-# How This Site Works
+## How This Site Works
 
 This page explains the technical architecture of my personal site — how it's built, why I made certain choices, and how you can modify it.
 
-## Why I Built This
+### Why I Built This
 
 I wanted a personal site that was:
 - **Fast** — No frameworks, minimal JavaScript, optimized assets
@@ -18,7 +18,7 @@ I wanted a personal site that was:
 
 Most site builders add bloat. I decided to write my own, and it's only 44KB total.
 
-## The Build Pipeline
+### The Build Pipeline
 
 When I run `npm run build`, here's what happens:
 
@@ -42,7 +42,7 @@ Optimized dist/ folder
 
 Each step is intentional. The final output is **44KB** of pure optimized HTML/CSS/JS.
 
-## Content System
+### Content System
 
 I write content in Markdown. Each file can include optional metadata:
 
@@ -61,7 +61,7 @@ The `order` field controls navigation order (lower numbers first). The `title` f
 
 All markdown files automatically become sections in my site navigation. No database, no complex setup — just files in a folder.
 
-## Theme System
+### Theme System
 
 Originally, this site picked a random color theme on every page load (dark blue, teal, orange, etc.). That felt chaotic.
 
@@ -73,7 +73,7 @@ I redesigned the theme system to be **intentional**:
 
 The theme is controlled by CSS custom properties in `src/assets/scss/_variables.scss`. Changing the theme is one line of code.
 
-## Mobile Experience
+### Mobile Experience
 
 Screens under 600px get a different layout:
 - Top header collapses to an icon bar
@@ -81,7 +81,7 @@ Screens under 600px get a different layout:
 - Tap it to see all navigation links
 - All interaction is vanilla JavaScript, no libraries
 
-## Code Organization
+### Code Organization
 
 ```
 src/
@@ -104,7 +104,7 @@ src/
 └── index.html                # Page template
 ```
 
-### Build Scripts
+#### Build Scripts
 
 The main build script is `generate-md.ts` (94 lines, down from 194 before refactoring). It:
 1. Finds all `.md` files in `content/`
@@ -116,7 +116,7 @@ The main build script is `generate-md.ts` (94 lines, down from 194 before refact
 
 Shared logic lives in `src/scripts/lib/` — constants, utilities, markdown processing, and SEO generation. This keeps the main script clean and reusable code out of the way.
 
-### Client Code
+#### Client Code
 
 `src/assets/ts/main.ts` handles runtime behavior:
 - Detects system dark mode preference
@@ -126,21 +126,21 @@ Shared logic lives in `src/scripts/lib/` — constants, utilities, markdown proc
 
 Total: ~60 lines of vanilla JavaScript. No frameworks needed.
 
-## Testing Approach
+### Testing Approach
 
 I have two types of tests:
 
-### Integration Tests
+#### Integration Tests
 Run the markdown generator and verify it produces correct HTML. Catches regressions if I break the build pipeline.
 
-### Visual Regression Tests
+#### Visual Regression Tests
 Uses Puppeteer to screenshot the site in light and dark modes. Compares against baseline images to catch unintended visual changes.
 
 Screenshots are stored in `src/tests/output/snapshots/` for comparison and debugging.
 
 Run both with `npm run test`.
 
-## Deployment
+### Deployment
 
 GitHub Actions handles everything:
 
@@ -153,7 +153,7 @@ Workflow file: `.github/workflows/static.yml`
 
 Everything is automated. I just push code, GitHub Actions runs checks, and if tests pass, the site deploys automatically.
 
-## Performance Details
+### Performance Details
 
 Final asset sizes after optimization:
 - **CSS:** 17KB → 11KB (cssnano, -33%)
@@ -162,11 +162,11 @@ Final asset sizes after optimization:
 
 **Total:** 44KB of final assets. Fast load times on all devices.
 
-## Data & Telemetry
+### Data & Telemetry
 
 Zero tracking. I don't run analytics, use cookies, or collect data. Just a fast, simple site.
 
-## How to Extend This
+### How to Extend This
 
 Want to modify it?
 
@@ -177,7 +177,7 @@ Want to modify it?
 
 All changes feed through the build pipeline automatically.
 
-## Technical Stack
+### Technical Stack
 
 - **TypeScript** — Type-safe scripts and client code
 - **SCSS** — Organized stylesheets with variables and themes
@@ -190,6 +190,6 @@ All changes feed through the build pipeline automatically.
 
 No frameworks. No build tools beyond npm scripts. Everything is explicit and understandable.
 
-## Last Updated
+### Last Updated
 
 December 20, 2025 — [Commit 7ece2a5](https://github.com/timthecomputer/personal-site/commit/7ece2a5)

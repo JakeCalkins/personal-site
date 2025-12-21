@@ -70,5 +70,42 @@
   setYear();
   pickTheme();
   initThemeToggle();
+  
+  // Add copy buttons to code blocks
+  function addCopyButtons(): void {
+    try {
+      const blocks = document.querySelectorAll('pre code');
+      blocks.forEach((block) => {
+        const pre = block.parentElement;
+        if (!pre) return;
+        
+        const btn = document.createElement('button');
+        btn.className = 'copy-code-btn';
+        btn.textContent = 'Copy';
+        btn.setAttribute('aria-label', 'Copy code to clipboard');
+        btn.type = 'button';
+        
+        btn.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(block.textContent || '');
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+              btn.textContent = 'Copy';
+              btn.classList.remove('copied');
+            }, 2000);
+          } catch (e) {
+            btn.textContent = 'Failed';
+            setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+          }
+        });
+        
+        pre.style.position = 'relative';
+        pre.appendChild(btn);
+      });
+    } catch (e) { void 0; }
+  }
+  
+  addCopyButtons();
 
 })();

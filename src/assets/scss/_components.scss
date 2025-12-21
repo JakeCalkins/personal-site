@@ -94,3 +94,34 @@ button.social.theme-toggle.is-dark { background: var(--accent-color); color: var
 }
 
 /* intentionally empty (no extra hover behavior beyond banner hover) */
+
+/* Copy code button for code blocks */
+.copy-code-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--surface-color);
+  color: var(--accent-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease, background 0.15s ease;
+}
+
+.copy-code-btn:hover {
+  background: color-mix(in srgb, var(--surface-color) 75%, var(--accent-color) 25%);
+}
+
+.copy-code-btn.copied {
+  background: var(--accent-color);
+  color: var(--surface-solid);
+}
+
+pre:hover .copy-code-btn {
+  opacity: 1;
+}
+

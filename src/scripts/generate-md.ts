@@ -73,9 +73,10 @@ async function main(): Promise<void> {
 
   await fs.mkdir(distDir, { recursive: true });
 
-  // Build homepage with all sections
+  // Build homepage with only the first section (by order)
+  const homeSection = sections[0] || '';
   let homepage = indexTemplate
-    .replace(PLACEHOLDER_CONTENT, sections.join('\n\n'))
+    .replace(PLACEHOLDER_CONTENT, homeSection)
     .replace(PLACEHOLDER_PAGE_LINKS, pageLinks)
     .replace(PLACEHOLDER_FAB_LINKS, fabLinks);
 
@@ -102,6 +103,11 @@ async function main(): Promise<void> {
   // Copy CNAME if exists
   try {
     await fs.copyFile(path.join(cwd, 'CNAME'), path.join(distDir, 'CNAME'));
+  } catch { /* ignore */ }
+
+  // Copy _headers for security headers (GitHub Pages/Netlify)
+  try {
+    await fs.copyFile(path.join(srcDir, '_headers'), path.join(distDir, '_headers'));
   } catch { /* ignore */ }
 
   // Generate SEO files

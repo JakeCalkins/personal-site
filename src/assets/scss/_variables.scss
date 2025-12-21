@@ -9,6 +9,7 @@
   --surface-solid: #fffaf0;
   --accent-color: #0f1720;
   --border-color: rgba(15,23,32,0.06);
+  --link-hover-bg: rgba(0, 0, 0, 0.08);
   --section-gap: 1.25rem;
   /* Border width tokens so we can adjust thickness per-theme */
   --icon-border-width: 1px;
@@ -27,6 +28,7 @@ body[data-theme="light"] {
   --surface-solid: #fffaf0;
   --accent-color: #0f1720;
   --border-color: rgba(15,23,32,0.06);
+  --link-hover-bg: rgba(0, 0, 0, 0.08);
 }
 
 /* Respect system dark mode by providing a sensible dark baseline. This
@@ -42,6 +44,7 @@ body[data-theme="light"] {
     --surface-solid: #1a1a1a;
     --accent-color: #fffaf0;
     --border-color: rgba(255,255,255,0.12);
+    --link-hover-bg: rgba(255, 255, 255, 0.12);
   }
 }
 

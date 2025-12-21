@@ -1,3 +1,8 @@
+---
+title: About
+order: 1
+---
+
 ## About
 
 I'm a Full‑Stack Software Engineer with 5+ years of experience building cloud‑native services and modernizing legacy systems. I deliver accessible front‑end experiences and scalable, maintainable backends. UX is my passion.
