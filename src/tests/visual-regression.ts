@@ -12,7 +12,9 @@ async function run() {
     throw new Error('dist/index.html not found — run build:md first');
   }
 
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
   const page = await browser.newPage();
   await page.goto('file://' + indexPath, { waitUntil: 'networkidle0' });
 
