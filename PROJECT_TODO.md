@@ -67,6 +67,29 @@ Phase 6 Tasks
 		- Generated files already properly gitignored: `dist/`, `.nyc_output/`, `coverage/`, `src/assets/css/`, `src/assets/js/*.js`.
 		- All source files in `src/`, all build artifacts excluded from version control.
 
-- [ ] Update the README. Rewrite sections so that it sounds like I wrote the README for my own site, in the first person.
+- [x] Update the README. Rewrite sections so that it sounds like I wrote the README for my own site, in the first person.
+	- Notes:
+		- Rewrote entire README in first-person perspective ("I built this..." instead of "This site...").
+		- Updated all npm script references to reflect new simplified versions (build, dev, test, lint).
+		- Removed references to obsolete build sub-scripts and intermediate commands.
+		- Updated project structure documentation to reflect new src/scripts and src/tests organization.
+		- Simplified and clarified content sections while preserving technical depth.
+		- Added personal context about why choices were made (full control, TypeScript, no frameworks, automated deployment).
+		- Maintained clear development and deployment instructions for future maintainers.
 
-- [ ] Rewrite the test.md file (and rename it) so it serves as a page explaining this personal website, what it's supposed to do, and provides technical information (timestamped to a certain commit and date/time) as to how it works and why I implemented it that way.
+- [x] Rewrite the test.md file (and rename it) so it serves as a page explaining this personal website, what it's supposed to do, and provides technical information (timestamped to a certain commit and date/time) as to how it works and why I implemented it that way.
+	- Notes:
+		- Rewrote `content/test.md` as comprehensive technical documentation page titled "How This Site Works" (order: 20).
+		- Added detailed explanation of build pipeline architecture with visual flow diagram.
+		- Documented content system: markdown with YAML front-matter, automatic navigation injection.
+		- Explained theme system redesign: removed random color selection, implemented intentional dark/light modes.
+		- Detailed mobile experience: FAB navigation and responsive layout.
+		- Included complete code organization walkthrough with file structure explanation.
+		- Documented build scripts decomposition: 94-line main script + 170-line lib modules.
+		- Explained testing approach: integration tests + visual regression tests with screenshot storage.
+		- Covered deployment automation via GitHub Actions (linting → testing → minification → deploy).
+		- Included performance optimization details: final sizes after CSS/JS/HTML minification.
+		- Documented zero-tracking privacy stance.
+		- Added extension instructions for future modifications.
+		- Timestamped to December 20, 2025 with commit reference 7ece2a5.
+		- All tests passing: build generates correctly, visual regression validates layout, lint clean.
