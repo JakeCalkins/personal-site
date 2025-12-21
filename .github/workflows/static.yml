@@ -33,12 +33,12 @@ jobs:
             ${{ runner.os }}-node-
       - name: Install deps
         run: npm ci
+      - name: Build site
+        run: npm run build
       - name: Run linters
         run: npm run lint
       - name: Run tests
         run: npm run test
-      - name: Build site (validation)
-        run: npm run build
       - name: Run Lighthouse CI
         run: |
           npm install -g @lhci/cli@0.13.x
