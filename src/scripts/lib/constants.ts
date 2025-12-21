@@ -16,8 +16,6 @@ export const PLACEHOLDER_FAB_LINKS = '<!-- FAB_PAGE_LINKS -->';
 
 // Regex patterns
 export const HEADING_PATTERN = /^<h[12][\s>]/i;
-export const SLUG_REPLACE_PATTERN = /[^a-z0-9]+/g;
-export const SLUG_TRIM_PATTERN = /(^-|-$)/g;
 
 // HTML minification options
 export const MINIFY_OPTIONS = {
