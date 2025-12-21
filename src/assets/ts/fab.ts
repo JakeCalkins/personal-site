@@ -18,6 +18,8 @@
           fabButton.setAttribute('aria-expanded', 'true');
           fabMenu.setAttribute('aria-hidden', 'false');
           fabBackdrop.setAttribute('aria-hidden', 'false');
+          // Make menu focusable/interactive when open
+          fabMenu.removeAttribute('inert');
         } else {
           fabButton.classList.remove('open');
           fabMenu.classList.remove('open');
@@ -25,10 +27,16 @@
           fabButton.setAttribute('aria-expanded', 'false');
           fabMenu.setAttribute('aria-hidden', 'true');
           fabBackdrop.setAttribute('aria-hidden', 'true');
+          // Prevent focus on hidden menu content
+          fabMenu.setAttribute('inert', '');
         }
       };
 
       const toggleFab = () => setOpen(!fabButton.classList.contains('open'));
+
+      // Ensure correct initial state (closed, non-focusable)
+      // This prevents focusable elements within an aria-hidden container.
+      setOpen(false);
 
       fabButton.addEventListener('click', (e: MouseEvent) => { e.preventDefault(); toggleFab(); });
       fabBackdrop.addEventListener('click', () => { setOpen(false); });
