@@ -5,9 +5,8 @@
 dist/
 node_modules/
 src/assets/css/
-src/assets/js/*.js
-src/assets/js/*.ts
-coverage/
+src/assets/js/
+src/tests/output/
 .nyc_output/
 .ts-out-tests/
 .ts-out/

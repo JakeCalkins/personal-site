@@ -45,7 +45,7 @@ import path from 'path';
       ids: Array.from(new Set([...(initial.ids||[]), ...(afterOpen.ids||[])]))
     };
 
-    const outDir = path.join(cwd, 'dist', 'coverage');
+    const outDir = path.join(cwd, 'src', 'tests', 'output');
     await fs.mkdir(outDir, { recursive: true });
     await fs.writeFile(path.join(outDir, 'runtime-selectors.json'), JSON.stringify(combined, null, 2), 'utf8');
     console.log('Wrote runtime selectors to', path.join(outDir, 'runtime-selectors.json'));

@@ -32,10 +32,10 @@ async function run() {
   await fs.writeFile(path.join(cwd, 'content', 'test.md'), md, 'utf8');
 
   // run generator using the repository's dependencies but with cwd set to the tmp dir
-  const genSrc = path.join(repoRoot, 'scripts', 'generate-md.ts');
+  const genSrc = path.join(repoRoot, 'src', 'scripts', 'generate-md.ts');
   try {
-    const tsNodeRegister = path.join(repoRoot, 'node_modules', 'ts-node', 'register');
-    await execPromise(`node -r ${JSON.stringify(tsNodeRegister)} ${JSON.stringify(genSrc)}`, { cwd });
+    const tsNode = path.join(repoRoot, 'node_modules', '.bin', 'ts-node');
+    await execPromise(`${tsNode} ${JSON.stringify(genSrc)}`, { cwd });
   } catch (err: any) {
     console.error('Generator failed', err.stderr || err);
     throw new Error('generate-md execution failed');
@@ -47,6 +47,20 @@ async function run() {
 
   const outHtml = await fs.readFile(outIndex, 'utf8');
   if (!outHtml.includes('This is a test.')) throw new Error('Generated HTML does not include markdown content');
+
+  // Verify per-page HTML was generated
+  const perPage = path.join(cwd, 'dist', 'test-page.html');
+  const perPageExists = await fs.stat(perPage).then(() => true).catch(() => false);
+  // slug derived from title "Test Page" => "test-page"
+  if (!perPageExists) throw new Error('Per-page HTML was not generated for markdown file');
+  const perPageHtml = await fs.readFile(perPage, 'utf8');
+  if (!perPageHtml.includes('This is a test.')) throw new Error('Per-page HTML does not include markdown content');
+
+  // Verify page links were injected into desktop title area
+  if (!outHtml.includes('href="test-page.html"')) throw new Error('Index does not include link to per-page HTML');
+
+  // Verify page buttons were injected into mobile FAB menu
+  if (!outHtml.includes('class="item" href="test-page.html"')) throw new Error('FAB menu does not include per-page button link');
 
   console.log('generate-md test: OK');
 }

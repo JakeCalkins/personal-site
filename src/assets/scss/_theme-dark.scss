@@ -1,34 +1,19 @@
-/* Scoped dark theme partial. Applied when <body data-theme="dark"> is present.
-   This allows users to explicitly choose dark mode even when the system
-   preference is light. */
+/* Dark theme with black background and cream accents.
+   Applied when <body data-theme="dark"> is present or via prefers-color-scheme: dark.
+   Uses cream (#fffaf0) for links and highlights against black background. */
 
 body[data-theme="dark"] {
-  --bg: linear-gradient(135deg,#08070a 0%, #0b0b0d 100%);
+  --bg: linear-gradient(135deg, #0a0a0a 0%, #121212 100%);
   --text-color: #ece8e3;
   --muted-color: #9aa4ad;
   --surface-color: rgba(10,10,12,0.6);
-  --surface-solid: #0b0b0d;
-  --accent-color: #dfe8f8;
-  /* Stronger, lighter borders for dark mode to improve contrast */
-  --border-color: rgba(255, 255, 255, 0.6);
-  /* Increase border thickness for icons in dark mode; keep FAB button default */
-  --icon-border-width: 1.5px;
-    /* Restyle the FAB button specifically in dark mode: light-cream background,
-      black hamburger bars, and a thin light border (affects only the FAB icon)
-      — FAB menu items keep using `--icon-border-width`. */
-    --fab-bg: #fffaf0;
-    --fab-bar-color: #0b0b0d;
-    --fab-border-color: rgba(255,255,255,0.8);
-    --fab-border-width: 1px;
+  --surface-solid: #1a1a1a;
+  --accent-color: #fffaf0;
+  --border-color: rgba(255,255,255,0.12);
+  --link-hover-bg: rgba(255, 255, 255, 0.12);
+  --icon-border-width: 2px;
+  --fab-bg: #fffaf0;
+  --fab-border-color: rgba(255,255,255,0.8);
+  --fab-border-width: 1px;
 }
 
-/* Explicit light theme when user chooses 'light' to override system dark */
-body[data-theme="light"] {
-  --bg: linear-gradient(135deg, #eef7f6 0%, #fafbfd 100%);
-  --text-color: #0f1720;
-  --muted-color: #475569;
-  --surface-color: rgba(255,255,255,0.7);
-  --surface-solid: #ffffff;
-  --accent-color: #0f1720;
-  --border-color: rgba(15,23,32,0.06);
-}

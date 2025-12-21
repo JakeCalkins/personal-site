@@ -2,86 +2,49 @@
 
 /* Core CSS variables (kept as CSS variables so runtime theme switching still works) */
 :root {
-  --bg: linear-gradient(135deg, #eef7f6 0%, #fafbfd 100%);
+  --bg: linear-gradient(135deg, #fffaf0 0%, #faf8f5 100%);
   --text-color: #0f1720;
   --muted-color: #475569;
-  --surface-color: rgba(255,255,255,0.7);
-  --surface-solid: #ffffff;
+  --surface-color: rgba(255,255,250,0.7);
+  --surface-solid: #fffaf0;
   --accent-color: #0f1720;
   --border-color: rgba(15,23,32,0.06);
+  --link-hover-bg: rgba(0, 0, 0, 0.08);
   --section-gap: 1.25rem;
   /* Border width tokens so we can adjust thickness per-theme */
   --icon-border-width: 1px;
   --fab-border-width: 2px;
   /* FAB appearance tokens (can be theme-overridden) */
   --fab-bg: color-mix(in srgb, var(--surface-solid) 55%, var(--accent-color) 45%);
-  --fab-bar-color: var(--surface-solid);
   --fab-border-color: var(--border-color);
 }
 
-/* Theme palettes (light). Dark overrides live in _theme-dark partial imported by main file */
-body[data-theme="t1"] {
-  --bg: linear-gradient(135deg, #eef7f6 0%, #fafbfd 100%);
+/* Explicit light theme (cream palette) */
+body[data-theme="light"] {
+  --bg: linear-gradient(135deg, #fffaf0 0%, #faf8f5 100%);
   --text-color: #0f1720;
   --muted-color: #475569;
-  --surface-color: rgba(255,255,255,0.7);
-  --surface-solid: #ffffff;
+  --surface-color: rgba(255,255,250,0.7);
+  --surface-solid: #fffaf0;
   --accent-color: #0f1720;
   --border-color: rgba(15,23,32,0.06);
-}
-
-body[data-theme="t2"] {
-  --bg: linear-gradient(135deg, #fffaf0 0%, #f8f0e6 100%);
-  --text-color: #1b2430;
-  --muted-color: #536070;
-  --surface-color: rgba(255,255,250,0.8);
-  --surface-solid: #fffaf0;
-  --accent-color: #1b2430;
-  --border-color: rgba(27,36,48,0.06);
-}
-
-body[data-theme="t3"] {
-  --bg: linear-gradient(135deg, #f6f8ff 0%, #ffffff 100%);
-  --text-color: #061728;
-  --muted-color: #4b5563;
-  --surface-color: rgba(255,255,255,0.8);
-  --surface-solid: #ffffff;
-  --accent-color: #0b3a66;
-  --border-color: rgba(11,58,102,0.06);
-}
-
-body[data-theme="t4"] {
-  --bg: linear-gradient(135deg, #fff8fb 0%, #fffdfd 100%);
-  --text-color: #221a20;
-  --muted-color: #6b5864;
-  --surface-color: rgba(255,255,255,0.8);
-  --surface-solid: #fff8fb;
-  --accent-color: #2b1f2a;
-  --border-color: rgba(43,31,42,0.06);
-}
-
-body[data-theme="t5"] {
-  --bg: linear-gradient(135deg, #f3fff7 0%, #fbfffc 100%);
-  --text-color: #06221a;
-  --muted-color: #3e6b5a;
-  --surface-color: rgba(255,255,255,0.8);
-  --surface-solid: #f3fff7;
-  --accent-color: #064b39;
-  --border-color: rgba(6,36,25,0.06);
+  --link-hover-bg: rgba(0, 0, 0, 0.08);
 }
 
 /* Respect system dark mode by providing a sensible dark baseline. This
    sets root variables when the user prefers dark color scheme. If a
-   specific `body[data-theme="..."]` is present it will continue to
+   specific `body[data-theme="dark"]` is present it will continue to
    take precedence. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: linear-gradient(135deg,#08070a 0%, #0b0b0d 100%);
+    --bg: linear-gradient(135deg, #0a0a0a 0%, #121212 100%);
     --text-color: #ece8e3;
     --muted-color: #9aa4ad;
     --surface-color: rgba(10,10,12,0.6);
-    --surface-solid: #0b0b0d;
-    --accent-color: #dfe8f8;
+    --surface-solid: #1a1a1a;
+    --accent-color: #fffaf0;
     --border-color: rgba(255,255,255,0.12);
+    --link-hover-bg: rgba(255, 255, 255, 0.12);
   }
 }
+
