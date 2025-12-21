@@ -17,4 +17,4 @@ I'm a [CICS Alumnus](https://cics.umass.edu) from the University of Massachusett
 
 ### Looking for
 
-Full‑Stack or Front‑End roles (remote, MA, Southern NH). If your team is building modern front‑end experiences or cloud‑based systems, let's connect via [LinkedIn](www.linkedin.com/in/jakecalkins).
+Full‑Stack or Front‑End roles (remote, MA, Southern NH). If your team is building modern front‑end experiences or cloud‑based systems, let's connect via [LinkedIn](https://www.linkedin.com/in/jakecalkins).
